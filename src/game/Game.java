@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
 
 public class Game extends Canvas implements Runnable {
 	
@@ -15,9 +16,19 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private boolean running = false;
 	
+	private Random r;
+	private Handler handler;
+	
 	
 	public Game() {
 		new Window(WIDTH, HEIGHT, "AsteroidsFromScratch", this);
+		
+		handler = new Handler();
+		r = new Random();
+		
+		for(int i = 0; i < 50; i++) {
+			handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player));
+		}
 	}
 
 	public synchronized void start() {
@@ -36,6 +47,7 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 	
+//	Copied game loop
 	public void run() {
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
@@ -64,6 +76,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	private void tick() {
+		handler.tick();
 		
 	}
 	
@@ -78,6 +91,8 @@ public class Game extends Canvas implements Runnable {
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		handler.render(g);
 		
 		g.dispose();
 		bs.show();
