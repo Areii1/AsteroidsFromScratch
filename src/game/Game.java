@@ -21,14 +21,17 @@ public class Game extends Canvas implements Runnable {
 	
 	
 	public Game() {
+		handler = new Handler();
+		this.addKeyListener(new KeyInput(handler));
+		
 		new Window(WIDTH, HEIGHT, "AsteroidsFromScratch", this);
 		
-		handler = new Handler();
 		r = new Random();
 		
-		for(int i = 0; i < 50; i++) {
-			handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player));
+		for(int i = 0; i < 20; i++) {
+			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid));
 		}
+		handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player));
 	}
 
 	public synchronized void start() {
@@ -91,7 +94,6 @@ public class Game extends Canvas implements Runnable {
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		
 		handler.render(g);
 		
 		g.dispose();
