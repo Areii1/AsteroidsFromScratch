@@ -59,21 +59,34 @@ public class KeyInput extends KeyAdapter {
 //				PLAYER KEY events
 				if (key == KeyEvent.VK_SPACE) {
 					if (rnd.nextBoolean()) {
-						tempObject.setVelY(rnd.nextInt(5));
-						tempObject.setVelX(rnd.nextInt(5));
+						tempObject.setVelY(rnd.nextInt(3));
+						tempObject.setVelX(rnd.nextInt(3) * 2);
 					}
 					else if (rnd.nextBoolean()) {
-						tempObject.setVelY(rnd.nextInt(5) * -1);
-						tempObject.setVelX(rnd.nextInt(5));
+						tempObject.setVelY(rnd.nextInt(3));
+						tempObject.setVelX(rnd.nextInt(3) * -2);
 					}
 					else if (rnd.nextBoolean()) {
-						tempObject.setVelY(rnd.nextInt(5));
-						tempObject.setVelX(rnd.nextInt(5) * -1);
+						tempObject.setVelY(rnd.nextInt(3) * -1);
+						tempObject.setVelX(rnd.nextInt(3) * 2);
+					}
+					else if (rnd.nextBoolean()){
+						tempObject.setVelY(rnd.nextInt(3) * -1);
+						tempObject.setVelX(rnd.nextInt(3) * -2);
+					}
+					else if (rnd.nextBoolean() && rnd.nextBoolean()){
+						tempObject.setVelY(rnd.nextInt(1));
+						tempObject.setVelX(rnd.nextInt(25));
+					}
+					else if (rnd.nextBoolean() && rnd.nextBoolean()){
+						tempObject.setVelY(rnd.nextInt(25));
+						tempObject.setVelX(rnd.nextInt(1));
 					}
 					else {
-						tempObject.setVelY(rnd.nextInt(5) * -1);
-						tempObject.setVelX(rnd.nextInt(5) * -1);
+						tempObject.setVelY(rnd.nextInt(3));
+						tempObject.setVelX(rnd.nextInt(3));
 					}
+					
 					
 					
 					

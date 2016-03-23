@@ -15,16 +15,16 @@ public class Player extends GameObject{
 		x = x + velX;
 		y = y + velY;
 		
-		if (x > Game.WIDTH) x = 0;
-		if (x < 0) x = Game.WIDTH;
-		if (y > Game.HEIGHT) y = 0;
-		if (y < 0) y = Game.HEIGHT;
+		if (x > Game.WIDTH - 32) x = 0;
+		if (x < 0) x = Game.WIDTH - 32;
+		if (y > Game.HEIGHT - 32) y = 0;
+		if (y < 0) y = Game.HEIGHT - 32;
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.RED);
-		g.fillOval(x, y, 32, 32);
+		g.setColor(Color.GREEN);
+		g.fillOval(x, y, 30, 30);
 	}
 	
 	

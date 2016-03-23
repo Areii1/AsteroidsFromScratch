@@ -10,7 +10,7 @@ public class Game extends Canvas implements Runnable {
 	
 	private static final long serialVersionUID = -4584388369897487885L;
 	
-	public static final int WIDTH = 640;
+	public static final int WIDTH = 900;
 	public static final int HEIGHT = WIDTH / 12 * 9;
 	
 	private Thread thread;
@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable {
 		
 		r = new Random();
 		
-		for(int i = 0; i < 20; i++) {
+		for(int i = 0; i < 30; i++) {
 			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid));
 		}
 		handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player));

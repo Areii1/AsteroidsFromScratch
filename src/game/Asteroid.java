@@ -15,28 +15,32 @@ public class Asteroid extends GameObject{
 		rnd = new Random();
 		
 		if (rnd.nextBoolean()) {
-			velX = rnd.nextInt(2) * 1 + 1;
-			velY = rnd.nextInt(2) * 2 + 1;
+			velX = rnd.nextInt(3);
+			velY = rnd.nextInt(3) * 2;
 		}
 		else if (rnd.nextBoolean()) {
-			velX = rnd.nextInt(2) * -1 + 1;
-			velY = rnd.nextInt(2) * -2 - 1;
+			velX = rnd.nextInt(3);
+			velY = rnd.nextInt(3) * -2;
 		}
 		else if (rnd.nextBoolean()) {
-			velX = rnd.nextInt(2) * -1 - 1;
-			velY = rnd.nextInt(2) * -2 + 1;
+			velX = rnd.nextInt(3) * -1;
+			velY = rnd.nextInt(3) * 2;
+		}
+		else if (rnd.nextBoolean()){
+			velX = rnd.nextInt(3) * -1;
+			velY = rnd.nextInt(3) * -2;
+		}
+		else if (rnd.nextBoolean() && rnd.nextBoolean()) {
+			velX = rnd.nextInt(20);
+			velY = rnd.nextInt(1);
+		}
+		else if (rnd.nextBoolean() && rnd.nextBoolean()) {
+			velX = rnd.nextInt(1);
+			velY = rnd.nextInt(20);
 		}
 		else {
-			velX = rnd.nextInt(2) * -1 - 1;
-			velY = rnd.nextInt(2) * -2 - 1;
-		
-//			do { 
-//		height = rnd.nextInt(30) + 10;
-//		width = rnd.nextInt(50) + 10;
-//			} while(height == 0 || width == 0);
-//			
-//		System.out.println("height: " + height);
-//		System.out.println("width: " + width);
+			velX = 2;
+			velY = 2;
 		}
 	}
 
@@ -45,17 +49,24 @@ public class Asteroid extends GameObject{
 		x = x + velX;
 		y = y + velY;
 		
-		if (x > Game.WIDTH) x = 0;
-		if (x < 0) x = Game.WIDTH;
-		if (y > Game.HEIGHT) y = 0;
-		if (y < 0) y = Game.HEIGHT;
+		if (rnd.nextBoolean()) {
+			if (y < 0 || y > Game.HEIGHT - 32) velY = velY * -1;
+			if (x < 0 || x > Game.WIDTH - 32) velX = velX * -1;
+		}
+		else {
+			if (x > Game.WIDTH - 32) x = 0;
+			if (x < 0) x = Game.WIDTH - 32;
+			if (y > Game.HEIGHT - 32) y = 0;
+			if (y < 0) y = Game.HEIGHT - 32;
+		}
+		
 	}
 
 	@Override
 	public void render(Graphics g) {
 		
-		g.setColor(Color.WHITE);
-		g.drawRect(x, y, 30, 30);
+		g.setColor(Color.RED);
+		g.fillRect(x, y, 30, 30);
 	}
 	
 	public int getRandomInt(int seed) {
