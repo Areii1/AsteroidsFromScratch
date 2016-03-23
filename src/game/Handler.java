@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 
 public class Handler {
-	
 //	List of all gameObjects
 	LinkedList<GameObject> gameObjects = new LinkedList<GameObject>();
 	
@@ -22,6 +21,7 @@ public class Handler {
 			tempObject.render(g);
 		}
 	}
+	
 	public void addObject(GameObject object) {
 		gameObjects.add(object);
 	}

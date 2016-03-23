@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 public class Window extends javax.swing.JFrame {
-
 	private static final long serialVersionUID = -4369730830015653927L;
 	
 	public Window(int width, int height, String title, Game game) {

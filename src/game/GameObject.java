@@ -1,9 +1,9 @@
 package game;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public abstract class GameObject {
-	
 	protected int x, y;
 	protected ID id;
 	protected int velX;
@@ -17,6 +17,7 @@ public abstract class GameObject {
 	
 	public abstract void tick();
 	public abstract void render(Graphics g);
+	public abstract Rectangle getBounds();
 	
 	
 	public int getX() {
@@ -58,8 +59,4 @@ public abstract class GameObject {
 	public void setVelY(int velY) {
 		this.velY = velY;
 	}
-
-
-	
-	
 }

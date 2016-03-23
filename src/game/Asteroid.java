@@ -2,12 +2,10 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.Random;
 
-public class Asteroid extends GameObject{
-	
-	private int height;
-	private int width;
+public class Asteroid extends GameObject {
 	public Random rnd;
 
 	public Asteroid(int x, int y, ID id) {
@@ -26,7 +24,7 @@ public class Asteroid extends GameObject{
 			velX = rnd.nextInt(3) * -1;
 			velY = rnd.nextInt(3) * 2;
 		}
-		else if (rnd.nextBoolean()){
+		else if (rnd.nextBoolean()) {
 			velX = rnd.nextInt(3) * -1;
 			velY = rnd.nextInt(3) * -2;
 		}
@@ -42,6 +40,10 @@ public class Asteroid extends GameObject{
 			velX = 2;
 			velY = 2;
 		}
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, 30, 30);
 	}
 
 	@Override
@@ -59,14 +61,12 @@ public class Asteroid extends GameObject{
 			if (y > Game.HEIGHT - 32) y = 0;
 			if (y < 0) y = Game.HEIGHT - 32;
 		}
-		
 	}
 
 	@Override
 	public void render(Graphics g) {
-		
 		g.setColor(Color.RED);
-		g.fillRect(x, y, 30, 30);
+		g.drawRect(x, y, 30, 30);
 	}
 	
 	public int getRandomInt(int seed) {
@@ -74,5 +74,4 @@ public class Asteroid extends GameObject{
 		int rndNumber = rnd.nextInt(seed);
 		return rndNumber;
 	}
-
 }

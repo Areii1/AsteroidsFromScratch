@@ -7,7 +7,6 @@ import java.awt.image.BufferStrategy;
 import java.util.Random;
 
 public class Game extends Canvas implements Runnable {
-	
 	private static final long serialVersionUID = -4584388369897487885L;
 	
 	public static final int WIDTH = 900;
@@ -28,10 +27,10 @@ public class Game extends Canvas implements Runnable {
 		
 		r = new Random();
 		
-		for(int i = 0; i < 30; i++) {
+		for (int i = 0; i < 30; i++) {
 			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid));
 		}
-		handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player));
+		handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player, handler));
 	}
 
 	public synchronized void start() {
@@ -45,20 +44,21 @@ public class Game extends Canvas implements Runnable {
 			thread.join();
 			running = false;
 		}
-		catch(Exception e) {
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 //	Copied game loop
 	public void run() {
+		this.requestFocus();
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
 		int frames = 0;
-		while (running){
+		while (running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
@@ -69,7 +69,7 @@ public class Game extends Canvas implements Runnable {
 			if (running) render();
 			frames++;
 			
-			if(System.currentTimeMillis() - timer > 1000) {
+			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				System.out.println("FPS: " + frames);
 				frames = 0;
@@ -80,7 +80,6 @@ public class Game extends Canvas implements Runnable {
 	
 	private void tick() {
 		handler.tick();
-		
 	}
 	
 	private void render() {
@@ -89,12 +88,17 @@ public class Game extends Canvas implements Runnable {
 			this.createBufferStrategy(3);
 			return;
 		}
-		
 		Graphics g = bs.getDrawGraphics();
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		handler.render(g);
+		
+		String deaths = "Collision: " + Player.deathCounter;
+		g.drawString(deaths, 10, 30);
+		g.drawString("ESC to close", WIDTH - 100, 30);
+		g.drawString("W A S D to move", WIDTH - 100, 50);
+		g.drawString("SPACE to hack", WIDTH - 100, 70);
 		
 		g.dispose();
 		bs.show();
