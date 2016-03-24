@@ -38,7 +38,8 @@ public class Player extends GameObject {
 				
 				if (getBounds().intersects(tempObject.getBounds())) {
 //					collision code
-					if (!((getX() == Game.WIDTH / 2) && (getY() == Game.HEIGHT / 2))) {
+					if ((((getX() > (Game.WIDTH / 2 + 10)) || (getX() < (Game.WIDTH / 2 - 10))) 
+						&& ((getY() > (Game.HEIGHT / 2 + 10)) || (getY() < (Game.HEIGHT / 2 - 10))))) {
 						deathCounter++;
 					}
 					setX(Game.WIDTH / 2);

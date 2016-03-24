@@ -12,6 +12,8 @@ public class Game extends Canvas implements Runnable {
 	public static final int WIDTH = 900;
 	public static final int HEIGHT = WIDTH / 12 * 9;
 	
+	private int gameScore;
+
 	private Thread thread;
 	private boolean running = false;
 	
@@ -27,7 +29,7 @@ public class Game extends Canvas implements Runnable {
 		
 		r = new Random();
 		
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 15; i++) {
 			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid));
 		}
 		handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player, handler));
@@ -80,6 +82,7 @@ public class Game extends Canvas implements Runnable {
 	
 	private void tick() {
 		handler.tick();
+		gameScore++;
 	}
 	
 	private void render() {
@@ -95,10 +98,14 @@ public class Game extends Canvas implements Runnable {
 		handler.render(g);
 		
 		String deaths = "Collision: " + Player.deathCounter;
+		String scoreStr = "Score: " + gameScore;
 		g.drawString(deaths, 10, 30);
+		g.drawString(scoreStr, 10, 50);
+		
 		g.drawString("ESC to close", WIDTH - 100, 30);
 		g.drawString("W A S D to move", WIDTH - 100, 50);
 		g.drawString("SPACE to hack", WIDTH - 100, 70);
+		
 		
 		g.dispose();
 		bs.show();
@@ -107,5 +114,4 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String[] arguments) {
 		new Game();
 	}
-
 }
