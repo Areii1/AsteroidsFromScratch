@@ -8,8 +8,8 @@ public class Projectile extends GameObject {
 	Handler handler;
 	public static int killCount;
 
-	public Projectile(int x, int y, ID id, Handler handler, Player player) {
-		super(x, y, id);
+	public Projectile(int x, int y, ID id, Handler handler, Player player, int width, int height) {
+		super(x, y, id, width, height);
 		this.handler = handler;
 		
 		velX = player.getVelX() - 1;
@@ -35,22 +35,31 @@ public class Projectile extends GameObject {
 			if (tempObject.getId() == ID.Asteroid) {
 				
 				if (getBounds().intersects(tempObject.getBounds())) {
-					handler.removeObject(tempObject);
-					killCount++;
+					
+					if (!(tempObject.getWidth() == 20 && tempObject.getHeight() == 20)) {
+						handler.addObject(new Asteroid(tempObject.getX() + 20, tempObject.getY() - 20, ID.Asteroid, 20, 20));
+						handler.addObject(new Asteroid(tempObject.getX() - 20, tempObject.getY() + 20, ID.Asteroid, 20, 20));
+						handler.removeObject(tempObject);
+						killCount++;
+					}
+					else {
+						handler.removeObject(tempObject);
+						killCount++;
 					}
 				}
 			}
 		}
+	}
 
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.WHITE);
-		g.fillRect(x, y, 3, 10);
+		g.fillRect(x, y, width, height);
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 3, 10);
+		return new Rectangle(x, y, width, height);
 	}
 
 }

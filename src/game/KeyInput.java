@@ -24,7 +24,7 @@ public class KeyInput extends KeyAdapter {
 				if (key == KeyEvent.VK_S) tempObject.setVelY(5);
 				if (key == KeyEvent.VK_D) tempObject.setVelX(5);
 				
-				if (key == KeyEvent.VK_ENTER) new Projectile(tempObject.getX(), tempObject.getY(), ID.Projectile, handler, (Player) tempObject); 
+				if (key == KeyEvent.VK_ENTER) new Projectile(tempObject.getX(), tempObject.getY(), ID.Projectile, handler, (Player) tempObject, 3, 10); 
 			}
 			if (tempObject.getId() == ID.Asteroid) {
 //				PLAYER KEY events

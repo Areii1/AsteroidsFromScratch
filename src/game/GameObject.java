@@ -8,11 +8,15 @@ public abstract class GameObject {
 	protected ID id;
 	protected int velX;
 	protected int velY;
+	protected int width;
+	protected int height;
 	
-	public GameObject(int x, int y, ID id) {
+	public GameObject(int x, int y, ID id, int width, int height) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
+		this.width = width;
+		this.height = height;
 	}
 	
 	public abstract void tick();
@@ -58,5 +62,21 @@ public abstract class GameObject {
 
 	public void setVelY(int velY) {
 		this.velY = velY;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
 	}
 }

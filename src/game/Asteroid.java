@@ -8,8 +8,8 @@ import java.util.Random;
 public class Asteroid extends GameObject {
 	public Random rnd;
 
-	public Asteroid(int x, int y, ID id) {
-		super(x, y, id);
+	public Asteroid(int x, int y, ID id, int width, int height) {
+		super(x, y, id, width, height);
 		rnd = new Random();
 		
 		if (rnd.nextBoolean()) {
@@ -43,7 +43,7 @@ public class Asteroid extends GameObject {
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 30, 30);
+		return new Rectangle(x, y, width, height);
 	}
 
 	@Override
@@ -65,8 +65,16 @@ public class Asteroid extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.RED);
-		g.drawRect(x, y, 30, 30);
+		
+		
+		if (this.width == 30 && this.height == 30) {
+			g.setColor(Color.RED);
+			g.drawRect(x, y, width, height);
+		}
+		else {
+			g.setColor(Color.RED);
+			g.drawOval(x, y, width, height);
+		}
 	}
 	
 	public int getRandomInt(int seed) {

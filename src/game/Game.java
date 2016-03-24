@@ -31,9 +31,9 @@ public class Game extends Canvas implements Runnable {
 		r = new Random();
 		
 		for (int i = 0; i < 30; i++) {
-			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid));
+			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid, 30, 30));
 		}
-		handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player, handler));
+		handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player, handler, 20, 20));
 	}
 
 	public synchronized void start() {

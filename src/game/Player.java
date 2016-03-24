@@ -8,13 +8,13 @@ public class Player extends GameObject {
 	Handler handler;
 	public static int deathCounter;
 
-	public Player(int x, int y, ID id, Handler handler) {
-		super(x, y, id);
+	public Player(int x, int y, ID id, Handler handler, int width, int height) {
+		super(x, y, id, width, height);
 		this.handler = handler;
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 20, 20);
+		return new Rectangle(x, y, width, height);
 	}
 
 	@Override
@@ -52,6 +52,6 @@ public class Player extends GameObject {
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.GREEN);
-		g.fillRect(x, y, 20, 20);
+		g.fillRect(x, y, width, height);
 	}
 }
