@@ -3,6 +3,7 @@ package game;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
@@ -29,7 +30,7 @@ public class Game extends Canvas implements Runnable {
 		
 		r = new Random();
 		
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 30; i++) {
 			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid));
 		}
 		handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player, handler));
@@ -98,13 +99,17 @@ public class Game extends Canvas implements Runnable {
 		handler.render(g);
 		
 		String deaths = "Collision: " + Player.deathCounter;
+		String kills = "Kills: " + Projectile.killCount;
 		String scoreStr = "Score: " + gameScore;
 		g.drawString(deaths, 10, 30);
-		g.drawString(scoreStr, 10, 50);
+		g.drawString(kills, 10, 50);
+		g.drawString(scoreStr, 10, 70);
+		
 		
 		g.drawString("ESC to close", WIDTH - 100, 30);
 		g.drawString("W A S D to move", WIDTH - 100, 50);
-		g.drawString("SPACE to hack", WIDTH - 100, 70);
+		g.drawString("Enter to shoot", WIDTH - 100, 70);
+		g.drawString("SPACE to hack", WIDTH - 100, 90);
 		
 		
 		g.dispose();

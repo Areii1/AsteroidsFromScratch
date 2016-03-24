@@ -6,8 +6,7 @@ import java.awt.Rectangle;
 
 public class Projectile extends GameObject {
 	Handler handler;
-//	private boolean collided;
-//	private boolean outOfArea;
+	public static int killCount;
 
 	public Projectile(int x, int y, ID id, Handler handler, Player player) {
 		super(x, y, id);
@@ -25,7 +24,7 @@ public class Projectile extends GameObject {
 		x = x + velX;
 		y = y + velY;
 		
-//		if (x > Game.WIDTH || x < 0 || y > Game.HEIGHT || y < 0) outOfArea = true;
+		if (x > Game.WIDTH || x < 0 || y > Game.HEIGHT || y < 0) handler.removeObject(this);
 		collision();
 	}
 	
@@ -36,7 +35,8 @@ public class Projectile extends GameObject {
 			if (tempObject.getId() == ID.Asteroid) {
 				
 				if (getBounds().intersects(tempObject.getBounds())) {
-//					collision code
+					handler.removeObject(tempObject);
+					killCount++;
 					}
 				}
 			}
