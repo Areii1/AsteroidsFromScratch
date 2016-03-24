@@ -37,13 +37,16 @@ public class Projectile extends GameObject {
 				if (getBounds().intersects(tempObject.getBounds())) {
 					
 					if (!(tempObject.getWidth() == 20 && tempObject.getHeight() == 20)) {
+						handler.removeObject(this);
 						handler.addObject(new Asteroid(tempObject.getX() + 20, tempObject.getY() - 20, ID.Asteroid, 20, 20));
 						handler.addObject(new Asteroid(tempObject.getX() - 20, tempObject.getY() + 20, ID.Asteroid, 20, 20));
 						handler.removeObject(tempObject);
+						
 						killCount++;
 					}
 					else {
 						handler.removeObject(tempObject);
+						handler.removeObject(this);
 						killCount++;
 					}
 				}

@@ -73,7 +73,7 @@ public class Asteroid extends GameObject {
 		}
 		else {
 			g.setColor(Color.RED);
-			g.drawOval(x, y, width, height);
+			g.drawRect(x, y, width, height);
 		}
 	}
 	
