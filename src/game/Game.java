@@ -30,7 +30,7 @@ public class Game extends Canvas implements Runnable {
 		
 		r = new Random();
 		
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 5; i++) {
 			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid, 30, 30));
 		}
 		handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player, handler, 20, 20));
@@ -98,13 +98,14 @@ public class Game extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		handler.render(g);
 		
-		String deaths = "Collision: " + Player.deathCounter;
+		String deaths = "Deaths: " + Player.deathCounter;
 		String kills = "Kills: " + Projectile.killCount;
 		String scoreStr = "Score: " + (gameScore + (Projectile.killCount * 50) - (Player.deathCounter * 500));
+		
+		g.setColor(Color.GREEN);
 		g.drawString(deaths, 10, 30);
 		g.drawString(kills, 10, 50);
 		g.drawString(scoreStr, 10, 70);
-		
 		
 		g.drawString("ESC to close", WIDTH - 100, 30);
 		g.drawString("W A S D to move", WIDTH - 100, 50);

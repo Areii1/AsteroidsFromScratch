@@ -6,17 +6,17 @@ import java.awt.Rectangle;
 public abstract class GameObject {
 	protected int x, y;
 	protected ID id;
-	protected int velX;
-	protected int velY;
-	protected int width;
-	protected int height;
+	protected int velocityX;
+	protected int velocityY;
+	protected int objectWidth;
+	protected int objectHeight;
 	
 	public GameObject(int x, int y, ID id, int width, int height) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
-		this.width = width;
-		this.height = height;
+		this.objectWidth = width;
+		this.objectHeight = height;
 	}
 	
 	public abstract void tick();
@@ -49,34 +49,34 @@ public abstract class GameObject {
 	}
 
 	public int getVelX() {
-		return velX;
+		return velocityX;
 	}
 
 	public void setVelX(int velX) {
-		this.velX = velX;
+		this.velocityX = velX;
 	}
 
 	public int getVelY() {
-		return velY;
+		return velocityY;
 	}
 
 	public void setVelY(int velY) {
-		this.velY = velY;
+		this.velocityY = velY;
 	}
 	
 	public int getWidth() {
-		return width;
+		return objectWidth;
 	}
 
 	public void setWidth(int width) {
-		this.width = width;
+		this.objectWidth = width;
 	}
 
 	public int getHeight() {
-		return height;
+		return objectHeight;
 	}
 
 	public void setHeight(int height) {
-		this.height = height;
+		this.objectHeight = height;
 	}
 }

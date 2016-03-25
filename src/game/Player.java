@@ -14,13 +14,13 @@ public class Player extends GameObject {
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, width, height);
+		return new Rectangle(x, y, objectWidth, objectHeight);
 	}
 
 	@Override
 	public void tick() {
-		x = x + velX;
-		y = y + velY;
+		x = x + velocityX;
+		y = y + velocityY;
 		
 		if (x > Game.WIDTH - 32) x = 0;
 		if (x < 0) x = Game.WIDTH - 32;
@@ -52,6 +52,6 @@ public class Player extends GameObject {
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.GREEN);
-		g.fillRect(x, y, width, height);
+		g.fillRect(x, y, objectWidth, objectHeight);
 	}
 }

@@ -12,8 +12,8 @@ public class Projectile extends GameObject {
 		super(x, y, id, width, height);
 		this.handler = handler;
 		
-		velX = player.getVelX() - 1;
-		velY = player.getVelY() - 1;
+		velocityX = player.getVelX();
+		velocityY = player.getVelY() - 1;
 		GameObject projectile = (GameObject) this;
 		
 		handler.addObject(projectile);
@@ -21,8 +21,8 @@ public class Projectile extends GameObject {
 
 	@Override
 	public void tick() {
-		x = x + velX;
-		y = y + velY;
+		x = x + velocityX;
+		y = y + velocityY;
 		
 		if (x > Game.WIDTH || x < 0 || y > Game.HEIGHT || y < 0) handler.removeObject(this);
 		collision();
@@ -57,12 +57,12 @@ public class Projectile extends GameObject {
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.WHITE);
-		g.fillRect(x, y, width, height);
+		g.fillRect(x, y, objectWidth, objectHeight);
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, width, height);
+		return new Rectangle(x, y, objectWidth, objectHeight);
 	}
 
 }

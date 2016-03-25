@@ -10,76 +10,75 @@ public class Asteroid extends GameObject {
 
 	public Asteroid(int x, int y, ID id, int width, int height) {
 		super(x, y, id, width, height);
-		rnd = new Random();
-		
-		if (rnd.nextBoolean()) {
-			velX = rnd.nextInt(3);
-			velY = rnd.nextInt(3) * 2;
-		}
-		else if (rnd.nextBoolean()) {
-			velX = rnd.nextInt(3);
-			velY = rnd.nextInt(3) * -2;
-		}
-		else if (rnd.nextBoolean()) {
-			velX = rnd.nextInt(3) * -1;
-			velY = rnd.nextInt(3) * 2;
-		}
-		else if (rnd.nextBoolean()) {
-			velX = rnd.nextInt(3) * -1;
-			velY = rnd.nextInt(3) * -2;
-		}
-		else if (rnd.nextBoolean() && rnd.nextBoolean()) {
-			velX = rnd.nextInt(20);
-			velY = rnd.nextInt(1);
-		}
-		else if (rnd.nextBoolean() && rnd.nextBoolean()) {
-			velX = rnd.nextInt(1);
-			velY = rnd.nextInt(20);
-		}
-		else {
-			velX = 2;
-			velY = 2;
-		}
+		setVelocity();
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, width, height);
+		return new Rectangle(x, y, objectWidth, objectHeight);
 	}
 
 	@Override
 	public void tick() {
-		x = x + velX;
-		y = y + velY;
+		x = x + velocityX;
+		y = y + velocityY;
 		
-		if (rnd.nextBoolean()) {
-			if (y < 0 || y > Game.HEIGHT - 32) velY = velY * -1;
-			if (x < 0 || x > Game.WIDTH - 32) velX = velX * -1;
+		if (Math.random() >= 0.5) {
+			bounceFromWall();
 		}
 		else {
-			if (x > Game.WIDTH - 32) x = 0;
-			if (x < 0) x = Game.WIDTH - 32;
-			if (y > Game.HEIGHT - 32) y = 0;
-			if (y < 0) y = Game.HEIGHT - 32;
+			goThroughWall();
 		}
 	}
 
 	@Override
 	public void render(Graphics g) {
+		g.setColor(Color.RED);
+		g.drawRect(x, y, objectWidth, objectHeight);
+	}
+	
+	private void setVelocity() {
+		double random = Math.random();
 		
-		
-		if (this.width == 30 && this.height == 30) {
-			g.setColor(Color.RED);
-			g.drawRect(x, y, width, height);
+		if (random > 0.97) {
+			velocityX = getRandomIntBetween(-60, 60);
+			velocityY = getRandomIntBetween(-60, 60);
+		}
+		else if (random > 0.95) {
+			velocityX = getRandomIntBetween(-20, 20);
+			velocityY = getRandomIntBetween(-20, 20);
 		}
 		else {
-			g.setColor(Color.RED);
-			g.drawRect(x, y, width, height);
+			velocityX = getRandomIntBetween(-3, 3);
+			velocityY = getRandomIntBetween(-3, 3);
 		}
 	}
 	
-	public int getRandomInt(int seed) {
-		rnd = new Random();
-		int rndNumber = rnd.nextInt(seed);
-		return rndNumber;
+	private int getRandomIntBetween(int min, int max) {
+		Random rnd = new Random();
+		return rnd.nextInt(max - min + 1) + min;
+	}
+	
+	private void bounceFromWall() {
+		if (y < 0 || y > Game.HEIGHT - objectWidth) {
+			velocityY = velocityY * -1;
+		}
+		if (x < 0 || x > Game.WIDTH - objectWidth) {
+			velocityX = velocityX * -1;
+		}
+	}
+	
+	private void goThroughWall() {
+		if (x > Game.WIDTH - objectWidth) {
+			x = 0;
+		}
+		else if (x < 0) {
+			x = Game.WIDTH - objectWidth;
+		}
+		if (y > Game.HEIGHT - objectWidth) {
+			y = 0;
+		}
+		else if (y < 0) {
+			y = Game.HEIGHT - objectWidth;
+		}
 	}
 }

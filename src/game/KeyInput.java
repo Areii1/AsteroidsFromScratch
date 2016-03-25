@@ -42,7 +42,7 @@ public class KeyInput extends KeyAdapter {
 					keyDown[3] = true;
 				}
 				
-				if (key == KeyEvent.VK_ENTER) new Projectile(tempObject.getX(), tempObject.getY(), ID.Projectile, handler, (Player) tempObject, 3, 10); 
+				if (key == KeyEvent.VK_ENTER) new Projectile((tempObject.getX() + tempObject.getWidth() / 2), tempObject.getY(), ID.Projectile, handler, (Player) tempObject, 10, 2); 
 			}
 			if (tempObject.getId() == ID.Asteroid) {
 //				PLAYER KEY events
