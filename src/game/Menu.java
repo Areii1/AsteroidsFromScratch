@@ -40,7 +40,17 @@ public class Menu extends MouseAdapter {
 				game.gameState = STATE.Menu;
 			}
 		}
-		if (game.gameState == STATE.End) {
+		if (game.gameState == STATE.LostGame) {
+			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
+				game.gameState = STATE.Play;
+				Game.deathCount = 0;
+				Game.killCount = 0;
+				Game.gameScore = 0;
+				Game.createAsteroids(30);
+				Game.createPlayer();
+			}
+		}
+		if (game.gameState == STATE.WonGame) {
 			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
 				game.gameState = STATE.Play;
 				Game.deathCount = 0;
@@ -53,7 +63,6 @@ public class Menu extends MouseAdapter {
 	}
 	
 	public void mouseReleased(MouseEvent e) {
-		
 	}
 	
 	private boolean mouseOver(int mouseX, int mouseY, int x, int y, int objectWidth, int objectHeight) {
@@ -71,7 +80,6 @@ public class Menu extends MouseAdapter {
 	}
 	
 	public void tick() {
-		
 	}
 	
 	public void render(Graphics g) {
@@ -115,17 +123,33 @@ public class Menu extends MouseAdapter {
 			g.setColor(Color.RED);
 			g.drawRect(Game.WIDTH / 2 - 150, 150, 300, 64);
 		}
-		else if (game.gameState == STATE.End) {
+		else if (game.gameState == STATE.LostGame) {
 			Font font = new Font("verdana", 1, 50);
 			Font font2 = new Font("arial", 1, 30);
 			
 			g.setFont(font2);
 			g.setColor(Color.GREEN);
-			g.drawString("You lost with a score of: " + Game.gameScore, 100, 80);
+			g.drawString("5 deaths: You lost with a score of: " + 
+			(Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), 100, 80);
 			
 			g.setFont(font2);
 			g.setColor(Color.GREEN);
 			g.drawString("Try Again", Game.WIDTH / 2 - 20, 188);
+			g.setColor(Color.RED);
+			g.drawRect(Game.WIDTH / 2 - 150, 150, 300, 64);
+		}
+		else if (game.gameState == STATE.WonGame) {
+			Font font = new Font("verdana", 1, 50);
+			Font font2 = new Font("arial", 1, 30);
+			
+			g.setFont(font2);
+			g.setColor(Color.GREEN);
+			g.drawString("90 kills: You won the game with a score of: " + 
+			(Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), 100, 80);
+			
+			g.setFont(font2);
+			g.setColor(Color.GREEN);
+			g.drawString("Play Again", Game.WIDTH / 2 - 20, 188);
 			g.setColor(Color.RED);
 			g.drawRect(Game.WIDTH / 2 - 150, 150, 300, 64);
 		}

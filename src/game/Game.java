@@ -25,9 +25,11 @@ public class Game extends Canvas implements Runnable {
 		Menu,
 		Help,
 		Play,
-		End;
+		LostGame,
+		WonGame;
 	}
 	public STATE gameState = STATE.Menu;
+	
 	private Menu menu;
 	
 	
@@ -96,11 +98,15 @@ public class Game extends Canvas implements Runnable {
 		if (gameState == STATE.Play) {
 			gameScore++;
 		}
-		else if (gameState == STATE.Menu || gameState == STATE.End || gameState == STATE.Help) {
+		else if (gameState == STATE.Menu || gameState == STATE.LostGame || gameState == STATE.Help) {
 			menu.tick();
 		}
 		if (deathCount >= 5) {
-			gameState = STATE.End;
+			gameState = STATE.LostGame;
+			handler.clearEnemies();
+		}
+		if (killCount >= 90) {
+			gameState = STATE.WonGame;
 			handler.clearEnemies();
 		}
 	}
@@ -132,7 +138,7 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("Enter to shoot", WIDTH - 100, 70);
 			g.drawString("SPACE to hack", WIDTH - 100, 90);
 		}
-		else if (gameState == STATE.Menu || gameState == STATE.Help || gameState == STATE.End) {
+		else if (gameState == STATE.Menu || gameState == STATE.Help || gameState == STATE.LostGame || gameState == STATE.WonGame) {
 			menu.render(g);
 		}
 		g.dispose();
