@@ -23,6 +23,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public enum STATE {
 		Menu,
+		Help,
 		Game;
 	}
 	public STATE gameState = STATE.Menu;
@@ -31,10 +32,12 @@ public class Game extends Canvas implements Runnable {
 	
 	public Game() {
 		handler = new Handler();
+		menu = new Menu(this, handler);
 		addKeyListener(new KeyInput(handler));
+		addMouseListener(new Menu(this, handler));
 		
 		new Window(WIDTH, HEIGHT, "AsteroidsFromScratch", this);
-		menu = new Menu(this, handler);
+		
 		
 		if (gameState == STATE.Game) {
 			createAsteroids(30);
@@ -125,6 +128,9 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("SPACE to hack", WIDTH - 100, 90);
 		}
 		else if (gameState == STATE.Menu) {
+			menu.render(g);
+		}
+		else if (gameState == STATE.Help) {
 			menu.render(g);
 		}
 		

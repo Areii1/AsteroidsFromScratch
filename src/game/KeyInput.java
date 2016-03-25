@@ -3,9 +3,12 @@ package game;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import game.Game.STATE;
+
 public class KeyInput extends KeyAdapter {
 	private Handler handler;
 	private boolean[] keyDown = {false, false, false, false};
+	private Game game;
 	
 	public KeyInput(Handler handler) {
 		this.handler = handler;
