@@ -3,7 +3,6 @@ package game;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
@@ -20,8 +19,15 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private boolean running = false;
 	
-	private Random r;
+	private Random r = new Random();
 	private Handler handler;
+	
+	public enum STATE {
+		Menu,
+		Game;
+	}
+	public STATE gameState = STATE.Game;
+	private Menu menu;
 	
 	
 	public Game() {
@@ -29,13 +35,13 @@ public class Game extends Canvas implements Runnable {
 		addKeyListener(new KeyInput(handler));
 		
 		new Window(WIDTH, HEIGHT, "AsteroidsFromScratch", this);
+		menu = new Menu();
 		
-		r = new Random();
-		
-		for (int i = 0; i < 30; i++) {
-			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid, 30, 30));
+		if (gameState == STATE.Game) {
+			createAsteroids(30);
+			createPlayer();
 		}
-		handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player, handler, 20, 20));
+		
 	}
 
 	public synchronized void start() {
@@ -85,7 +91,12 @@ public class Game extends Canvas implements Runnable {
 	
 	private void tick() {
 		handler.tick();
-		gameScore++;
+		if (gameState == STATE.Game) {
+			gameScore++;
+		}
+		else if (gameState == STATE.Menu) {
+			menu.tick();
+		}
 	}
 	
 	private void render() {
@@ -100,20 +111,24 @@ public class Game extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		handler.render(g);
 		
-		String deaths = "Deaths: " + deathCount;
-		String kills = "Kills: " + killCount;
-		String scoreStr = "Score: " + (gameScore + (killCount * 50) - (deathCount * 500));
-		
-		g.setColor(Color.GREEN);
-		g.drawString(deaths, 10, 30);
-		g.drawString(kills, 10, 50);
-		g.drawString(scoreStr, 10, 70);
-		
-		g.drawString("ESC to close", WIDTH - 100, 30);
-		g.drawString("W A S D to move", WIDTH - 100, 50);
-		g.drawString("Enter to shoot", WIDTH - 100, 70);
-		g.drawString("SPACE to hack", WIDTH - 100, 90);
-		
+		if (gameState == STATE.Game) {
+			String deaths = "Deaths: " + deathCount;
+			String kills = "Kills: " + killCount;
+			String scoreStr = "Score: " + (gameScore + (killCount * 50) - (deathCount * 500));
+			
+			g.setColor(Color.GREEN);
+			g.drawString(deaths, 10, 30);
+			g.drawString(kills, 10, 50);
+			g.drawString(scoreStr, 10, 70);
+			
+			g.drawString("ESC to close", WIDTH - 100, 30);
+			g.drawString("W A S D to move", WIDTH - 100, 50);
+			g.drawString("Enter to shoot", WIDTH - 100, 70);
+			g.drawString("SPACE to hack", WIDTH - 100, 90);
+		}
+		else if (gameState == STATE.Menu) {
+			menu.render(g);
+		}
 		
 		g.dispose();
 		bs.show();
@@ -122,4 +137,14 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String[] arguments) {
 		new Game();
 	}
+	
+	private void createAsteroids(int amount) {
+		for (int i = 0; i < amount; i++) {
+			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid, 30, 30));
+		}
+	}
+	private void createPlayer() {
+		handler.addObject(new Player(WIDTH / 2, HEIGHT / 2, ID.Player, handler, 20, 20));
+	}
+	
 }

@@ -39,13 +39,17 @@ public class Asteroid extends GameObject {
 	public void calulateVelocity() {
 		double random = Math.random();
 		
-		if (random > 0.98) {
+		if (random > 0.999) {
 			velocityX = getRandomIntBetween(-40, 40);
 			velocityY = getRandomIntBetween(-40, 40);
 		}
-		else if (random > 0.95) {
-			velocityX = getRandomIntBetween(-20, 20);
-			velocityY = getRandomIntBetween(-20, 20);
+		else if (random > 0.96) {
+			if (random > 0.5) {
+				velocityX = getRandomIntBetween(-20, 20);
+			}
+			else {
+				velocityY = getRandomIntBetween(-20, 20);
+			}
 		}
 		else {
 			velocityX = getRandomIntBetween(-3, 3);
