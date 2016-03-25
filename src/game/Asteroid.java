@@ -26,7 +26,7 @@ public class Asteroid extends GameObject {
 			bounceFromWall();
 		}
 		else {
-			goThroughWall();
+			setOppositeHorizontalOrVertivalCoordinate();
 		}
 	}
 
@@ -67,18 +67,9 @@ public class Asteroid extends GameObject {
 		}
 	}
 	
-	private void goThroughWall() {
-		if (x > Game.WIDTH - objectWidth) {
-			x = 0;
-		}
-		else if (x < 0) {
-			x = Game.WIDTH - objectWidth;
-		}
-		if (y > Game.HEIGHT - objectWidth) {
-			y = 0;
-		}
-		else if (y < 0) {
-			y = Game.HEIGHT - objectWidth;
-		}
+	
+	
+	public boolean isBigger() {
+		return getWidth() != 20 && getHeight() != 20;
 	}
 }

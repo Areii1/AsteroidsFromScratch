@@ -48,7 +48,7 @@ public abstract class GameObject {
 		this.id = id;
 	}
 
-	public int getVelX() {
+	public int getVelocityX() {
 		return velocityX;
 	}
 
@@ -56,7 +56,7 @@ public abstract class GameObject {
 		this.velocityX = velX;
 	}
 
-	public int getVelY() {
+	public int getVelocityY() {
 		return velocityY;
 	}
 
@@ -78,5 +78,20 @@ public abstract class GameObject {
 
 	public void setHeight(int height) {
 		this.objectHeight = height;
+	}
+	
+	protected void setOppositeHorizontalOrVertivalCoordinate() {
+		if (x > Game.WIDTH - objectWidth) {
+			x = 0;
+		}
+		else if (x < 0) {
+			x = Game.WIDTH - objectWidth;
+		}
+		if (y > Game.HEIGHT - objectWidth) {
+			y = 0;
+		}
+		else if (y < 0) {
+			y = Game.HEIGHT - objectWidth;
+		}
 	}
 }

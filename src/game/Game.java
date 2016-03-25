@@ -14,6 +14,8 @@ public class Game extends Canvas implements Runnable {
 	public static final int HEIGHT = WIDTH / 12 * 9;
 	
 	private int gameScore;
+	public static int killCount = 0;
+	public static int deathCount = 0;
 
 	private Thread thread;
 	private boolean running = false;
@@ -30,7 +32,7 @@ public class Game extends Canvas implements Runnable {
 		
 		r = new Random();
 		
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 30; i++) {
 			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid, 30, 30));
 		}
 		handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player, handler, 20, 20));
@@ -98,9 +100,9 @@ public class Game extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		handler.render(g);
 		
-		String deaths = "Deaths: " + Player.deathCounter;
-		String kills = "Kills: " + Projectile.killCount;
-		String scoreStr = "Score: " + (gameScore + (Projectile.killCount * 50) - (Player.deathCounter * 500));
+		String deaths = "Deaths: " + deathCount;
+		String kills = "Kills: " + killCount;
+		String scoreStr = "Score: " + (gameScore + (killCount * 50) - (deathCount * 500));
 		
 		g.setColor(Color.GREEN);
 		g.drawString(deaths, 10, 30);

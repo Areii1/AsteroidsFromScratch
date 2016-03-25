@@ -6,17 +6,32 @@ import java.awt.Rectangle;
 
 public class Projectile extends GameObject {
 	Handler handler;
-	public static int killCount;
 
 	public Projectile(int x, int y, ID id, Handler handler, Player player, int width, int height) {
 		super(x, y, id, width, height);
 		this.handler = handler;
 		
-		velocityX = player.getVelX();
-		velocityY = player.getVelY() - 1;
-		GameObject projectile = (GameObject) this;
+		if (player.getVelocityX() < 0) {
+			velocityX = -7;
+		}
+		else if (player.getVelocityX() > 0) {
+			velocityX = 7;
+		}
+		else {
+			velocityX = 0;
+		}
 		
-		handler.addObject(projectile);
+		if (player.getVelocityY() < 0) {
+			velocityY = -7;
+		}
+		else if (player.getVelocityY() > 0) {
+			velocityY = 7;
+		}
+		else {
+			velocityY = -7;
+		}
+		
+		handler.addObject(this);
 	}
 
 	@Override
@@ -24,30 +39,30 @@ public class Projectile extends GameObject {
 		x = x + velocityX;
 		y = y + velocityY;
 		
-		if (x > Game.WIDTH || x < 0 || y > Game.HEIGHT || y < 0) handler.removeObject(this);
-		collision();
+		removeWhenOutOfArea();
+		checkForImpact();
 	}
 	
-	private void collision() {
+	private void checkForImpact() {
 		for (int i = 0; i < handler.gameObjects.size(); i++) {
-			GameObject tempObject = handler.gameObjects.get(i);
+			GameObject gameObject = handler.gameObjects.get(i);
 			
-			if (tempObject.getId() == ID.Asteroid) {
-				
-				if (getBounds().intersects(tempObject.getBounds())) {
-					
-					if (!(tempObject.getWidth() == 20 && tempObject.getHeight() == 20)) {
+			if (gameObject.getId() == ID.Asteroid) {
+				Asteroid asteroid = (Asteroid) gameObject;
+				if (getBounds().intersects(gameObject.getBounds())) {
+					if (asteroid.isBigger()) {
 						handler.removeObject(this);
-						handler.addObject(new Asteroid(tempObject.getX() + 20, tempObject.getY() - 20, ID.Asteroid, 20, 20));
-						handler.addObject(new Asteroid(tempObject.getX() - 20, tempObject.getY() + 20, ID.Asteroid, 20, 20));
-						handler.removeObject(tempObject);
+						handler.removeObject(gameObject);
+						handler.addObject(new Asteroid(gameObject.getX() + 20, gameObject.getY() - 20, ID.Asteroid, 20, 20));
+						handler.addObject(new Asteroid(gameObject.getX() - 20, gameObject.getY() + 20, ID.Asteroid, 20, 20));
 						
-						killCount++;
+						Game.killCount++;
 					}
 					else {
-						handler.removeObject(tempObject);
 						handler.removeObject(this);
-						killCount++;
+						handler.removeObject(gameObject);
+						
+						Game.killCount++;
 					}
 				}
 			}
@@ -63,6 +78,12 @@ public class Projectile extends GameObject {
 	@Override
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, objectWidth, objectHeight);
+	}
+	
+	private void removeWhenOutOfArea() {
+		if (x > Game.WIDTH || x < 0 || y > Game.HEIGHT || y < 0) {
+			handler.removeObject(this);
+		}
 	}
 
 }
