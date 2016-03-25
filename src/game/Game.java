@@ -18,15 +18,14 @@ public class Game extends Canvas implements Runnable {
 
 	private Thread thread;
 	private boolean running = false;
-	
-	private Random r = new Random();
-	private Handler handler;
+
+	private static Handler handler;
 	
 	public enum STATE {
 		Menu,
 		Game;
 	}
-	public STATE gameState = STATE.Game;
+	public STATE gameState = STATE.Menu;
 	private Menu menu;
 	
 	
@@ -35,13 +34,12 @@ public class Game extends Canvas implements Runnable {
 		addKeyListener(new KeyInput(handler));
 		
 		new Window(WIDTH, HEIGHT, "AsteroidsFromScratch", this);
-		menu = new Menu();
+		menu = new Menu(this, handler);
 		
 		if (gameState == STATE.Game) {
 			createAsteroids(30);
 			createPlayer();
 		}
-		
 	}
 
 	public synchronized void start() {
@@ -138,12 +136,13 @@ public class Game extends Canvas implements Runnable {
 		new Game();
 	}
 	
-	private void createAsteroids(int amount) {
+	public static void createAsteroids(int amount) {
+		Random r = new Random();
 		for (int i = 0; i < amount; i++) {
 			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid, 30, 30));
 		}
 	}
-	private void createPlayer() {
+	public static void createPlayer() {
 		handler.addObject(new Player(WIDTH / 2, HEIGHT / 2, ID.Player, handler, 20, 20));
 	}
 	
