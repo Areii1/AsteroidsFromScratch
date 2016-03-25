@@ -52,7 +52,7 @@ public abstract class GameObject {
 		return velocityX;
 	}
 
-	public void setVelX(int velX) {
+	public void setVelocityX(int velX) {
 		this.velocityX = velX;
 	}
 
@@ -60,7 +60,7 @@ public abstract class GameObject {
 		return velocityY;
 	}
 
-	public void setVelY(int velY) {
+	public void setVelocityY(int velY) {
 		this.velocityY = velY;
 	}
 	

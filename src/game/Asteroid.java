@@ -10,7 +10,7 @@ public class Asteroid extends GameObject {
 
 	public Asteroid(int x, int y, ID id, int width, int height) {
 		super(x, y, id, width, height);
-		setVelocity();
+		calulateVelocity();
 	}
 	
 	public Rectangle getBounds() {
@@ -36,12 +36,12 @@ public class Asteroid extends GameObject {
 		g.drawRect(x, y, objectWidth, objectHeight);
 	}
 	
-	private void setVelocity() {
+	public void calulateVelocity() {
 		double random = Math.random();
 		
-		if (random > 0.97) {
-			velocityX = getRandomIntBetween(-60, 60);
-			velocityY = getRandomIntBetween(-60, 60);
+		if (random > 0.98) {
+			velocityX = getRandomIntBetween(-40, 40);
+			velocityY = getRandomIntBetween(-40, 40);
 		}
 		else if (random > 0.95) {
 			velocityX = getRandomIntBetween(-20, 20);

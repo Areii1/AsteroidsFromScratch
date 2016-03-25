@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public Game() {
 		handler = new Handler();
-		this.addKeyListener(new KeyInput(handler));
+		addKeyListener(new KeyInput(handler));
 		
 		new Window(WIDTH, HEIGHT, "AsteroidsFromScratch", this);
 		
