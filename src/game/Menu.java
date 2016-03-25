@@ -23,9 +23,9 @@ public class Menu extends MouseAdapter {
 		
 		if (game.gameState == STATE.Menu) {
 			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)) {
-				game.gameState = STATE.Game;
-					Game.createAsteroids(30);
-					Game.createPlayer();
+				game.gameState = STATE.Play;
+				Game.createAsteroids(30);
+				Game.createPlayer();
 			}
 			else if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 300, 300, 64)) {
 				game.gameState = STATE.Help;
@@ -33,14 +33,23 @@ public class Menu extends MouseAdapter {
 			else if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 450, 300, 64)) {
 				System.exit(0);
 			}
-			if (game.gameState == STATE.Help) {
-				if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
-	//				game.gameState = STATE.Game;
-					return;
-				}
+		}
+		//NOT WORKING PROPERLY
+		if (game.gameState == STATE.Help) {
+			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
+				game.gameState = STATE.Menu;
 			}
 		}
-		
+		if (game.gameState == STATE.End) {
+			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
+				game.gameState = STATE.Play;
+				Game.deathCount = 0;
+				Game.killCount = 0;
+				Game.gameScore = 0;
+				Game.createAsteroids(30);
+				Game.createPlayer();
+			}
+		}
 	}
 	
 	public void mouseReleased(MouseEvent e) {
@@ -72,7 +81,7 @@ public class Menu extends MouseAdapter {
 			
 			g.setFont(font);
 			g.setColor(Color.GREEN);
-			g.drawString("Menu", Game.WIDTH / 2 - 70, 80);
+			g.drawString("Asteroids", Game.WIDTH / 2 - 140, 80);
 			
 			g.setFont(font2);
 			g.setColor(Color.GREEN);
@@ -106,6 +115,19 @@ public class Menu extends MouseAdapter {
 			g.setColor(Color.RED);
 			g.drawRect(Game.WIDTH / 2 - 150, 150, 300, 64);
 		}
-		
+		else if (game.gameState == STATE.End) {
+			Font font = new Font("verdana", 1, 50);
+			Font font2 = new Font("arial", 1, 30);
+			
+			g.setFont(font2);
+			g.setColor(Color.GREEN);
+			g.drawString("You lost with a score of: " + Game.gameScore, 100, 80);
+			
+			g.setFont(font2);
+			g.setColor(Color.GREEN);
+			g.drawString("Try Again", Game.WIDTH / 2 - 20, 188);
+			g.setColor(Color.RED);
+			g.drawRect(Game.WIDTH / 2 - 150, 150, 300, 64);
+		}
 	}
 }

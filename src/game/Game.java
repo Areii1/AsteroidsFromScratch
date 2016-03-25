@@ -12,7 +12,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int WIDTH = 900;
 	public static final int HEIGHT = WIDTH / 12 * 9;
 	
-	private int gameScore;
+	public static int gameScore;
 	public static int killCount = 0;
 	public static int deathCount = 0;
 
@@ -24,7 +24,8 @@ public class Game extends Canvas implements Runnable {
 	public enum STATE {
 		Menu,
 		Help,
-		Game;
+		Play,
+		End;
 	}
 	public STATE gameState = STATE.Menu;
 	private Menu menu;
@@ -39,7 +40,7 @@ public class Game extends Canvas implements Runnable {
 		new Window(WIDTH, HEIGHT, "AsteroidsFromScratch", this);
 		
 		
-		if (gameState == STATE.Game) {
+		if (gameState == STATE.Play) {
 			createAsteroids(30);
 			createPlayer();
 		}
@@ -92,11 +93,15 @@ public class Game extends Canvas implements Runnable {
 	
 	private void tick() {
 		handler.tick();
-		if (gameState == STATE.Game) {
+		if (gameState == STATE.Play) {
 			gameScore++;
 		}
-		else if (gameState == STATE.Menu) {
+		else if (gameState == STATE.Menu || gameState == STATE.End || gameState == STATE.Help) {
 			menu.tick();
+		}
+		if (deathCount >= 5) {
+			gameState = STATE.End;
+			handler.clearEnemies();
 		}
 	}
 	
@@ -112,7 +117,7 @@ public class Game extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		handler.render(g);
 		
-		if (gameState == STATE.Game) {
+		if (gameState == STATE.Play) {
 			String deaths = "Deaths: " + deathCount;
 			String kills = "Kills: " + killCount;
 			String scoreStr = "Score: " + (gameScore + (killCount * 50) - (deathCount * 500));
@@ -127,13 +132,9 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("Enter to shoot", WIDTH - 100, 70);
 			g.drawString("SPACE to hack", WIDTH - 100, 90);
 		}
-		else if (gameState == STATE.Menu) {
+		else if (gameState == STATE.Menu || gameState == STATE.Help || gameState == STATE.End) {
 			menu.render(g);
 		}
-		else if (gameState == STATE.Help) {
-			menu.render(g);
-		}
-		
 		g.dispose();
 		bs.show();
 	}
