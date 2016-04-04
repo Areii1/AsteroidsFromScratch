@@ -11,27 +11,45 @@ public class Projectile extends GameObject {
 		super(x, y, id, width, height);
 		this.handler = handler;
 		
-		if (player.getVelocityX() < 0) {
-			velocityX = -7;
-		}
-		else if (player.getVelocityX() > 0) {
-			velocityX = 7;
-		}
-		else {
-			velocityX = 0;
-		}
-		
-		if (player.getVelocityY() < 0) {
-			velocityY = -7;
-		}
-		else if (player.getVelocityY() > 0) {
-			velocityY = 7;
-		}
-		else {
-			velocityY = -7;
-		}
-		
 		handler.addObject(this);
+		if (player.getVelocityX() == 0 && player.getVelocityY() == 0) {
+			handler.removeObject(this);
+		}
+		
+		if (player.getVelocityX() < 0 && player.getVelocityY() < 0) {
+			velocityX = player.getVelocityX() - 2;
+			velocityY = player.getVelocityY() - 2;
+		}
+		else if (player.getVelocityX() > 0 && player.getVelocityY() > 0) {
+			velocityX = player.getVelocityX() + 2;
+			velocityY = player.getVelocityY() + 2;
+		}
+		else if (player.getVelocityX() < 0 && player.getVelocityY() > 0) {
+			velocityX = player.getVelocityX() - 2;
+			velocityY = player.getVelocityY() + 2;
+		}
+		else if (player.getVelocityX() > 0 && player.getVelocityY() < 0) {
+			velocityX = player.getVelocityX() + 2;
+			velocityY = player.getVelocityY() - 2;
+		}
+		else if (player.getVelocityX() == 0 && player.getVelocityY() > 0) {
+			velocityX = 0;
+			velocityY = player.getVelocityY() + 2;
+		}
+		else if (player.getVelocityX() == 0 && player.getVelocityY() < 0) {
+			velocityX = 0;
+			velocityY = player.getVelocityY() - 2;
+		}
+		else if (player.getVelocityX() > 0 && player.getVelocityY() == 0) {
+			velocityX = player.getVelocityX() + 2;
+			velocityY = 0;
+		}
+		else if (player.getVelocityX() < 0 && player.getVelocityY() == 0) {
+			velocityX = player.getVelocityX() - 2;
+			velocityY = 0;
+		}
+		
+		
 	}
 
 	@Override
@@ -77,7 +95,7 @@ public class Projectile extends GameObject {
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, objectWidth, objectHeight);
+		return new Rectangle(x - objectWidth / 2, y, objectWidth - (objectWidth / 4), objectHeight);
 	}
 	
 	private void removeWhenOutOfArea() {

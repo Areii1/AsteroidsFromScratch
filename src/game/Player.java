@@ -43,7 +43,11 @@ public class Player extends GameObject {
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.GREEN);
-		g.fillRect(x, y, objectWidth, objectHeight);
+//		g.fillRect(x, y, objectWidth, objectHeight);
+		g.drawLine(x, y, x + objectWidth / 2, y + objectHeight);
+		g.drawLine(x, y, x - objectWidth / 2, y + objectHeight);
+		
+		g.drawLine(x + objectWidth / 2, y + objectHeight, x - objectWidth / 2, y + objectHeight);
 	}
 	
 	private void dontKillPlayerAtStart() {
