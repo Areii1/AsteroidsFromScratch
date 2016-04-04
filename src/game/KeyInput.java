@@ -90,7 +90,7 @@ public class KeyInput extends KeyAdapter {
 			if (gameObject.getId() == ID.Asteroid) {
 				if (releasedKey == KeyEvent.VK_SPACE) {
 					Asteroid asteroid = (Asteroid) gameObject;
-					asteroid.calulateVelocity();
+					asteroid.calculateVelocity();
 				}
 			}
 		}
