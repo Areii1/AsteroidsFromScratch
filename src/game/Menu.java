@@ -16,7 +16,8 @@ public class Menu extends MouseAdapter {
 		this.game = game;
 		this.handler = handler;
 	}
-	
+	/*When cursor is top of some box that says "Play","Help" or "Exit" and you click it and something happens. 
+	 * */
 	public void mousePressed(MouseEvent e) {
 		int mouseX = e.getX();
 		int mouseY = e.getY();
@@ -64,7 +65,7 @@ public class Menu extends MouseAdapter {
 	
 	public void mouseReleased(MouseEvent e) {
 	}
-	
+	// checks position of the cursor.
 	private boolean mouseOver(int mouseX, int mouseY, int x, int y, int objectWidth, int objectHeight) {
 		if (mouseX > x && mouseX < x + objectWidth) {
 			if (mouseY > y && mouseY < y + objectHeight) {

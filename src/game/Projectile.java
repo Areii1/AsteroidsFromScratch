@@ -60,7 +60,7 @@ public class Projectile extends GameObject {
 		removeWhenOutOfArea();
 		checkForImpact();
 	}
-	
+	// checks if bullet hits asteroid.
 	private void checkForImpact() {
 		for (int i = 0; i < handler.gameObjects.size(); i++) {
 			GameObject gameObject = handler.gameObjects.get(i);

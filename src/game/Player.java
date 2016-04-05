@@ -24,7 +24,8 @@ public class Player extends GameObject {
 		setOppositeHorizontalOrVertivalCoordinate();
 		checkForCollision();
 	}
-	
+	/* Checks if particles are in touch with each other. If yes, something happens. Else you can continue normally.
+	 * */
 	private void checkForCollision() {
 		for (int i = 0; i < handler.gameObjects.size(); i++) {
 			GameObject gameObject = handler.gameObjects.get(i);
@@ -49,7 +50,8 @@ public class Player extends GameObject {
 		
 		g.drawLine(x + objectWidth / 2, y + objectHeight, x - objectWidth / 2, y + objectHeight);
 	}
-	
+	/* Makes sure that player doesn't die right after it spawns. Works all so as death counter
+	 * */
 	private void dontKillPlayerAtStart() {
 		if (getX() > (Game.WIDTH / 2 + 10) || getX() < (Game.WIDTH / 2 - 10)
 			&& getY() > (Game.HEIGHT / 2 + 10) || getY() < (Game.HEIGHT / 2 - 10)) {

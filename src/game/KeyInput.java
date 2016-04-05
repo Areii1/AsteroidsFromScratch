@@ -13,7 +13,7 @@ public class KeyInput extends KeyAdapter {
 	public KeyInput(Handler handler) {
 		this.handler = handler;
 	}
-	
+	// When some key is pressed do something. Makes possible to move Player around.
 	public void keyPressed(KeyEvent e) {
 		int pressedKey = e.getKeyCode();
 		
@@ -59,7 +59,7 @@ public class KeyInput extends KeyAdapter {
 			System.exit(0);
 		}
 	}
-
+// Stops ships movement when the key is released.
 	public void keyReleased(KeyEvent e) {
 		int releasedKey = e.getKeyCode();
 		

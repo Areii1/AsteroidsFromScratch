@@ -35,7 +35,8 @@ public class Asteroid extends GameObject {
 		g.setColor(Color.RED);
 		g.drawRect(x, y, objectWidth, objectHeight);
 	}
-	
+	/* Calculates velocity of the asteroids and sets the velocity to them. 
+	 * */
 	public void calculateVelocity() {
 		double random = Math.random();
 		
@@ -57,12 +58,12 @@ public class Asteroid extends GameObject {
 			velocityY = getRandomIntBetween(-3, 3);
 		}
 	}
-	
+	// gets random value between max and min
 	private int getRandomIntBetween(int min, int max) {
 		Random rnd = new Random();
 		return rnd.nextInt(max - min + 1) + min;
 	}
-	
+	// Checks if the asteroid is edge of window. If yes, changes the direction to other direction.
 	private void bounceFromWall() {
 		if (y < 0 || y > Game.HEIGHT - objectWidth) {
 			velocityY = velocityY * -1;
@@ -73,7 +74,7 @@ public class Asteroid extends GameObject {
 	}
 	
 	
-	
+	// Checks if asteroid is big asteroid.
 	public boolean isBigger() {
 		return getWidth() != 20 && getHeight() != 20;
 	}
