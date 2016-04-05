@@ -21,15 +21,15 @@ public class Handler {
 			tempObject.render(g);
 		}
 	}
-	
+	// Adds objects to the game.
 	public void addObject(GameObject object) {
 		gameObjects.add(object);
 	}
-	
+	// deletes objects. Main purpose when asteroid is destroyed then this method deletes it.
 	public void removeObject(GameObject object) {
 		gameObjects.remove(object);
 	}
-	
+	// deletes all enemies.
 	public void clearEnemies() {
 		for (int i = 0; i < gameObjects.size(); i++) {
 			GameObject gameObject = gameObjects.get(i);

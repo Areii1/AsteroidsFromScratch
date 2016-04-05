@@ -148,13 +148,14 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String[] arguments) {
 		new Game();
 	}
-	
+	// creates asteroid in game
 	public static void createAsteroids(int amount) {
 		Random r = new Random();
 		for (int i = 0; i < amount; i++) {
 			handler.addObject(new Asteroid(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Asteroid, 30, 30));
 		}
 	}
+	// creates player in game
 	public static void createPlayer() {
 		handler.addObject(new Player(WIDTH / 2, HEIGHT / 2, ID.Player, handler, 20, 20));
 	}

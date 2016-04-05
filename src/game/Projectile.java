@@ -97,7 +97,7 @@ public class Projectile extends GameObject {
 	public Rectangle getBounds() {
 		return new Rectangle(x - objectWidth / 2, y, objectWidth - (objectWidth / 4), objectHeight);
 	}
-	
+	// removes projectile when it's out of the window.
 	private void removeWhenOutOfArea() {
 		if (x > Game.WIDTH || x < 0 || y > Game.HEIGHT || y < 0) {
 			handler.removeObject(this);

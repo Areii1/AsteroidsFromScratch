@@ -62,7 +62,7 @@ public class Menu extends MouseAdapter {
 			}
 		}
 	}
-	
+	// When mouse is not pressed, doesn't do anything special
 	public void mouseReleased(MouseEvent e) {
 	}
 	// checks position of the cursor.

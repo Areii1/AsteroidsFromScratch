@@ -95,7 +95,7 @@ public class KeyInput extends KeyAdapter {
 			}
 		}
 	}
-	
+	// Stops player when there is not any keys pressed.
 	private void stopPlayerVelocityWhenBothDirectionsNotPressed(GameObject gameObject) {
 		if (!keyDown[0] && !keyDown[2]) {
 			gameObject.setVelocityY(0);
