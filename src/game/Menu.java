@@ -130,13 +130,13 @@ public class Menu extends MouseAdapter {
 			g.setFont(font2);
 			g.setColor(Color.GREEN);
 			g.drawString("5 deaths: You lost with a score of: " + 
-			(Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), 100, 80);
+			(Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), 200, 160);
 			
 			g.setFont(font2);
 			g.setColor(Color.GREEN);
-			g.drawString("Try Again", Game.WIDTH / 2 - 20, 188);
+			g.drawString("Try Again", 400, 300);
 			g.setColor(Color.RED);
-			g.drawRect(Game.WIDTH / 2 - 150, 150, 300, 64);
+			g.drawRect(310, 260, 300, 64);
 		}
 		else if (game.gameState == STATE.WonGame) {
 			Font font = new Font("verdana", 1, 50);
