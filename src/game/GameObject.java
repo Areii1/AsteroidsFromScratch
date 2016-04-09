@@ -4,16 +4,15 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public abstract class GameObject {
-	protected int x, y;
+	Point point;
 	protected ID id;
 	protected int velocityX;
 	protected int velocityY;
 	protected int objectWidth;
 	protected int objectHeight;
 	
-	public GameObject(int x, int y, ID id, int width, int height) {
-		this.x = x;
-		this.y = y;
+	public GameObject(Point point, ID id, int width, int height) {
+		this.point = point;
 		this.id = id;
 		this.objectWidth = width;
 		this.objectHeight = height;
@@ -23,23 +22,6 @@ public abstract class GameObject {
 	public abstract void render(Graphics g);
 	public abstract Rectangle getBounds();
 	
-	
-	public int getX() {
-		return x;
-	}
-	
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
 	public ID getId() {
 		return id;
 	}
@@ -81,17 +63,19 @@ public abstract class GameObject {
 	}
 	
 	protected void setOppositeHorizontalOrVertivalCoordinate() {
-		if (x > Game.WIDTH - objectWidth) {
-			x = 0;
+		if (point.getX() > Game.WIDTH - objectWidth) {
+			point.setX(0);
 		}
-		else if (x < 0) {
-			x = Game.WIDTH - objectWidth;
+		else if (point.getX() < 0) {
+			point.setX(Game.WIDTH - objectWidth);
 		}
-		if (y > Game.HEIGHT - objectWidth) {
-			y = 0;
+		if (point.getY() > Game.HEIGHT - objectWidth) {
+			point.setY(0);
 		}
-		else if (y < 0) {
-			y = Game.HEIGHT - objectWidth;
+		else if (point.getY() < 0) {
+			point.setY(Game.HEIGHT - objectWidth);
 		}
 	}
+	
+
 }

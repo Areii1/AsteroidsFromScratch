@@ -8,19 +8,19 @@ import java.util.Random;
 public class Asteroid extends GameObject {
 	public Random rnd;
 
-	public Asteroid(int x, int y, ID id, int width, int height) {
-		super(x, y, id, width, height);
+	public Asteroid(Point point, ID id, int width, int height) {
+		super(point, id, width, height);
 		calculateVelocity();
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, objectWidth, objectHeight);
+		return new Rectangle(point.getX(), point.getY(), objectWidth, objectHeight);
 	}
 
 	@Override
 	public void tick() {
-		x = x + velocityX;
-		y = y + velocityY;
+		point.setX(point.getX() + velocityX);
+		point.setY(point.getY() + velocityY);
 		
 		if (Math.random() >= 0.5) {
 			bounceFromWall();
@@ -33,7 +33,7 @@ public class Asteroid extends GameObject {
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.RED);
-		g.drawRect(x, y, objectWidth, objectHeight);
+		g.drawRect(point.getX(), point.getY(), objectWidth, objectHeight);
 	}
 	/* Calculates velocity of the asteroids and sets the velocity to them. 
 	 * */
@@ -65,10 +65,10 @@ public class Asteroid extends GameObject {
 	}
 	// Checks if the asteroid is edge of window. If yes, changes the direction to other direction.
 	private void bounceFromWall() {
-		if (y < 0 || y > Game.HEIGHT - objectWidth) {
+		if (point.getY() < 0 || point.getY() > Game.HEIGHT - objectWidth) {
 			velocityY = velocityY * -1;
 		}
-		if (x < 0 || x > Game.WIDTH - objectWidth) {
+		if (point.getX() < 0 || point.getX() > Game.WIDTH - objectWidth) {
 			velocityX = velocityX * -1;
 		}
 	}

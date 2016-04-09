@@ -7,8 +7,8 @@ import java.awt.Rectangle;
 public class Projectile extends GameObject {
 	Handler handler;
 
-	public Projectile(int x, int y, ID id, Handler handler, Player player, int width, int height) {
-		super(x, y, id, width, height);
+	public Projectile(Point point, ID id, Handler handler, Player player, int width, int height) {
+		super(point, id, width, height);
 		this.handler = handler;
 		
 		handler.addObject(this);
@@ -54,8 +54,8 @@ public class Projectile extends GameObject {
 
 	@Override
 	public void tick() {
-		x = x + velocityX;
-		y = y + velocityY;
+		point.setX(point.getX() + velocityX);
+		point.setY(point.getY() + velocityY);
 		
 		removeWhenOutOfArea();
 		checkForImpact();
@@ -71,8 +71,8 @@ public class Projectile extends GameObject {
 					if (asteroid.isBigger()) {
 						handler.removeObject(this);
 						handler.removeObject(gameObject);
-						handler.addObject(new Asteroid(gameObject.getX() + 20, gameObject.getY() - 20, ID.Asteroid, 20, 20));
-						handler.addObject(new Asteroid(gameObject.getX() - 20, gameObject.getY() + 20, ID.Asteroid, 20, 20));
+						handler.addObject(new Asteroid(new Point(gameObject.point.getX() + 20, gameObject.point.getY() - 20), ID.Asteroid, 20, 20));
+						handler.addObject(new Asteroid(new Point(gameObject.point.getX() - 20, gameObject.point.getY() + 20), ID.Asteroid, 20, 20));
 						
 						Game.killCount++;
 					}
@@ -90,16 +90,16 @@ public class Projectile extends GameObject {
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.WHITE);
-		g.fillRect(x, y, objectWidth, objectHeight);
+		g.fillRect(point.getX(), point.getY(), objectWidth, objectHeight);
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x - objectWidth / 2, y, objectWidth - (objectWidth / 4), objectHeight);
+		return new Rectangle(point.getX() - objectWidth / 2, point.getY(), objectWidth - (objectWidth / 4), objectHeight);
 	}
 	// removes projectile when it's out of the window.
 	private void removeWhenOutOfArea() {
-		if (x > Game.WIDTH || x < 0 || y > Game.HEIGHT || y < 0) {
+		if (point.getX() > Game.WIDTH || point.getX() < 0 || point.getY() > Game.HEIGHT || point.getY() < 0) {
 			handler.removeObject(this);
 		}
 	}

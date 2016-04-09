@@ -6,20 +6,26 @@ import java.awt.Rectangle;
 
 public class Player extends GameObject {
 	Handler handler;
+	private int angle;
 
-	public Player(int x, int y, ID id, Handler handler, int width, int height) {
-		super(x, y, id, width, height);
+	public Player(Point point, ID id, Handler handler, int width, int height) {
+		super(point, id, width, height);
 		this.handler = handler;
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, objectWidth, objectHeight);
+		return new Rectangle(point.getX(), point.getY(), objectWidth, objectHeight);
 	}
 
 	@Override
 	public void tick() {
-		x = x + velocityX;
-		y = y + velocityY;
+		point.setX(point.getX() + velocityX);
+		point.setY(point.getY() + velocityY);
+		
+		angle = angle + 1;
+		if (angle >= 360) angle = 0;
+//		x = rotateX(x, y, x - objectWidth / 2, y - objectHeight / 2, angle);
+//		y = rotateY(x, y, x - objectWidth / 2, y - objectHeight / 2, angle);
 		
 		setOppositeHorizontalOrVertivalCoordinate();
 		checkForCollision();
@@ -34,8 +40,8 @@ public class Player extends GameObject {
 				if (getBounds().intersects(gameObject.getBounds())) {
 					dontKillPlayerAtStart();
 					
-					setX(Game.WIDTH / 2);
-					setY(Game.HEIGHT / 2);
+					point.setX(Game.WIDTH / 2);
+					point.setY(Game.HEIGHT / 2);
 				}
 			}
 		}
@@ -43,20 +49,38 @@ public class Player extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.GREEN);
-//		g.fillRect(x, y, objectWidth, objectHeight);
-		g.drawLine(x, y, x + objectWidth / 2, y + objectHeight);
-		g.drawLine(x, y, x - objectWidth / 2, y + objectHeight);
-		
-		g.drawLine(x + objectWidth / 2, y + objectHeight, x - objectWidth / 2, y + objectHeight);
+		renderPlayer(g);
 	}
+	
 	/* Makes sure that player doesn't die right after it spawns. Works all so as death counter
 	 * */
 	private void dontKillPlayerAtStart() {
-		if (getX() > (Game.WIDTH / 2 + 10) || getX() < (Game.WIDTH / 2 - 10)
-			&& getY() > (Game.HEIGHT / 2 + 10) || getY() < (Game.HEIGHT / 2 - 10)) {
+		if (point.getX() > (Game.WIDTH / 2 + 10) || point.getX() < (Game.WIDTH / 2 - 10)
+			&& point.getY() > (Game.HEIGHT / 2 + 10) || point.getY() < (Game.HEIGHT / 2 - 10)) {
 			Game.deathCount++;
 		}
 	}
+	
+	private void renderPlayer(Graphics g) {
+		g.setColor(Color.GREEN);
+		g.drawLine(point.getX(), point.getY(), point.getX() + objectWidth / 2, point.getY() + objectHeight);
+		g.drawLine(point.getX(), point.getY(), point.getX() - objectWidth / 2, point.getY() + objectHeight);
+		g.drawLine(point.getX() + objectWidth / 2, point.getY() + objectHeight, point.getX() - objectWidth / 2, point.getY() + objectHeight);
+		
+	}
+	
+	private int rotateX(int x, int y, int centerX, int centerY, int angle) {
+        angle = (int) (angle * (Math.PI / 180));		//radians
+        int rotatedX = (int) (Math.cos(angle) * (x - centerX) - Math.sin(angle) * (y - centerY) + centerX);
+
+        return rotatedX;
+    }
+	
+	private int rotateY(int x, int y, int centerX, int centerY, int angle) {
+        angle = (int) (angle * (Math.PI / 180));		//radians
+        int rotatedY = (int) (Math.sin(angle) * (x - centerX) + Math.cos(angle) * (y - centerY) + centerY);
+
+        return rotatedY;
+    }
 	
 }
