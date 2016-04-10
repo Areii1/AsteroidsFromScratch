@@ -4,11 +4,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import game.Game.STATE;
+import game.Player.*;
 
 public class KeyInput extends KeyAdapter {
 	private Handler handler;
 	private boolean[] keyDown = {false, false, false, false};
 	private Game game;
+	
+	public static ANGLE playerAngle = Player.ANGLE.Up;
 	
 	public KeyInput(Handler handler) {
 		this.handler = handler;
@@ -47,6 +50,15 @@ public class KeyInput extends KeyAdapter {
 							ID.Projectile, handler, (Player) gameObject, 3, 3);
 						break;
 				}
+				
+				if (keyDown[0] && !keyDown[1] && !keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.Up;
+				if (!keyDown[0] && keyDown[1] && !keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.Left;
+				if (!keyDown[0] && !keyDown[1] && keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.Down;
+				if (!keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.Right;
+//				if (keyDown[0] && keyDown[1] && !keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.UpLeft;
+//				if (keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.UpRight;
+//				if (!keyDown[0] && keyDown[1] && keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.DownLeft;
+//				if (!keyDown[0] && !keyDown[1] && keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.DownRight;
 			}
 			else if (gameObject.getId() == ID.Asteroid) {
 				if (pressedKey == KeyEvent.VK_SPACE) {

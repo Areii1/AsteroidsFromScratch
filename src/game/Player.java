@@ -3,14 +3,26 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import game.KeyInput.*;
 
 public class Player extends GameObject {
 	Handler handler;
-	private int angle;
+	public enum ANGLE {
+		Up,
+		Down,
+		Left,
+		Right,
+		UpLeft,
+		UpRight,
+		DownLeft,
+		DownRight;
+	}
+	
+	public static ANGLE playerAngle = ANGLE.Up;
+	
 	private Point topPoint;
 	private Point firstBasePoint;
 	private Point secondBasePoint;
-	private Point centerPoint;
 
 	public Player(Point point, ID id, Handler handler, int width, int height) {
 		super(point, id, width, height);
@@ -26,20 +38,7 @@ public class Player extends GameObject {
 		point.setX(point.getX() + velocityX);
 		point.setY(point.getY() + velocityY);
 		
-		angle = angle + 1;
-		if (angle >= 360) angle = 0;
-		
-//		int rotatedTopX = topPoint.rotatePoint(topPoint, topPoint, 1).getX();
-//		int rotatedTopY = topPoint.rotatePoint(topPoint, topPoint, 1).getY();
-//		topPoint.setX(rotatedTopX);
-//		topPoint.setX(rotatedTopY);
-//		
-//		int rotatedFirstBasePointX = firstBasePoint.rotatePoint(firstBasePoint, topPoint, 1).getX();
-//		int rotatedFirstBasePointY = firstBasePoint.rotatePoint(firstBasePoint, topPoint, 1).getY();
-//		firstBasePoint.setX(rotatedFirstBasePointX);
-//		firstBasePoint.setX(rotatedFirstBasePointY);
-		
-		
+		Player.playerAngle = KeyInput.playerAngle;
 		
 		setOppositeHorizontalOrVertivalCoordinate();
 		checkForCollision();
@@ -63,7 +62,7 @@ public class Player extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
-		renderPlayer(g);
+		renderPlayer(g, playerAngle);
 	}
 	
 	/* Makes sure that player doesn't die right after it spawns. Works all so as death counter
@@ -75,16 +74,46 @@ public class Player extends GameObject {
 		}
 	}
 	
-	private void renderPlayer(Graphics g) {
+	private void renderPlayer(Graphics g, ANGLE angle) {
 		g.setColor(Color.GREEN);
+	
 		topPoint = new Point(point.getX(), point.getY());
 		firstBasePoint = new Point(point.getX() - objectWidth / 2, point.getY() + objectHeight);
 		secondBasePoint = new Point(point.getX() + objectWidth / 2, point.getY() + objectHeight);
-//		centerPoint = new Point()
 		
+		if (angle == ANGLE.Up) {	
+			drawLines(g);
+		}
+		else if (angle == ANGLE.Down) {
+			firstBasePoint = new Point(topPoint.getX() - objectWidth / 2, topPoint.getY());
+			secondBasePoint = new Point(firstBasePoint.getX() + objectWidth, firstBasePoint.getY());
+			topPoint = new Point(firstBasePoint.getX() + objectWidth / 2, firstBasePoint.getY() + objectHeight);
+			
+			drawLines(g);
+		}
+		else if (angle == ANGLE.Left) {
+			firstBasePoint = new Point(topPoint.getX() + objectWidth / 2, topPoint.getY());
+			secondBasePoint = new Point(firstBasePoint.getX(), firstBasePoint.getY() + objectWidth);
+			topPoint = new Point(firstBasePoint.getX() - objectWidth, firstBasePoint.getY() + objectWidth / 2);
+			
+			drawLines(g);
+		}
+		else if (angle == ANGLE.Right) {
+			firstBasePoint = new Point(topPoint.getX() - objectWidth / 2, topPoint.getY());
+			secondBasePoint = new Point(firstBasePoint.getX(), firstBasePoint.getY() + objectWidth);
+			topPoint = new Point(firstBasePoint.getX() + objectWidth, firstBasePoint.getY() + objectWidth / 2);
+			
+			drawLines(g);
+		}
+		
+	}
+	
+	private void drawLines(Graphics g) {
 		g.drawLine(topPoint.getX(), topPoint.getY(), secondBasePoint.getX(), secondBasePoint.getY());
 		g.drawLine(topPoint.getX(), topPoint.getY(), firstBasePoint.getX(), firstBasePoint.getY());
 		g.drawLine(secondBasePoint.getX(), secondBasePoint.getY(), firstBasePoint.getX(), firstBasePoint.getY());
 	}
+	
+	
 	
 }
