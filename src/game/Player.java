@@ -7,6 +7,10 @@ import java.awt.Rectangle;
 public class Player extends GameObject {
 	Handler handler;
 	private int angle;
+	private Point topPoint;
+	private Point firstBasePoint;
+	private Point secondBasePoint;
+	private Point centerPoint;
 
 	public Player(Point point, ID id, Handler handler, int width, int height) {
 		super(point, id, width, height);
@@ -24,8 +28,18 @@ public class Player extends GameObject {
 		
 		angle = angle + 1;
 		if (angle >= 360) angle = 0;
-//		x = rotateX(x, y, x - objectWidth / 2, y - objectHeight / 2, angle);
-//		y = rotateY(x, y, x - objectWidth / 2, y - objectHeight / 2, angle);
+		
+//		int rotatedTopX = topPoint.rotatePoint(topPoint, topPoint, 1).getX();
+//		int rotatedTopY = topPoint.rotatePoint(topPoint, topPoint, 1).getY();
+//		topPoint.setX(rotatedTopX);
+//		topPoint.setX(rotatedTopY);
+//		
+//		int rotatedFirstBasePointX = firstBasePoint.rotatePoint(firstBasePoint, topPoint, 1).getX();
+//		int rotatedFirstBasePointY = firstBasePoint.rotatePoint(firstBasePoint, topPoint, 1).getY();
+//		firstBasePoint.setX(rotatedFirstBasePointX);
+//		firstBasePoint.setX(rotatedFirstBasePointY);
+		
+		
 		
 		setOppositeHorizontalOrVertivalCoordinate();
 		checkForCollision();
@@ -63,24 +77,14 @@ public class Player extends GameObject {
 	
 	private void renderPlayer(Graphics g) {
 		g.setColor(Color.GREEN);
-		g.drawLine(point.getX(), point.getY(), point.getX() + objectWidth / 2, point.getY() + objectHeight);
-		g.drawLine(point.getX(), point.getY(), point.getX() - objectWidth / 2, point.getY() + objectHeight);
-		g.drawLine(point.getX() + objectWidth / 2, point.getY() + objectHeight, point.getX() - objectWidth / 2, point.getY() + objectHeight);
+		topPoint = new Point(point.getX(), point.getY());
+		firstBasePoint = new Point(point.getX() - objectWidth / 2, point.getY() + objectHeight);
+		secondBasePoint = new Point(point.getX() + objectWidth / 2, point.getY() + objectHeight);
+//		centerPoint = new Point()
 		
+		g.drawLine(topPoint.getX(), topPoint.getY(), secondBasePoint.getX(), secondBasePoint.getY());
+		g.drawLine(topPoint.getX(), topPoint.getY(), firstBasePoint.getX(), firstBasePoint.getY());
+		g.drawLine(secondBasePoint.getX(), secondBasePoint.getY(), firstBasePoint.getX(), firstBasePoint.getY());
 	}
-	
-	private int rotateX(int x, int y, int centerX, int centerY, int angle) {
-        angle = (int) (angle * (Math.PI / 180));		//radians
-        int rotatedX = (int) (Math.cos(angle) * (x - centerX) - Math.sin(angle) * (y - centerY) + centerX);
-
-        return rotatedX;
-    }
-	
-	private int rotateY(int x, int y, int centerX, int centerY, int angle) {
-        angle = (int) (angle * (Math.PI / 180));		//radians
-        int rotatedY = (int) (Math.sin(angle) * (x - centerX) + Math.cos(angle) * (y - centerY) + centerY);
-
-        return rotatedY;
-    }
 	
 }
