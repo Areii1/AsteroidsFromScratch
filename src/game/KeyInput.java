@@ -50,15 +50,7 @@ public class KeyInput extends KeyAdapter {
 							ID.Projectile, handler, (Player) gameObject, 3, 3);
 						break;
 				}
-				
-				if (keyDown[0] && !keyDown[1] && !keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.Up;
-				if (!keyDown[0] && keyDown[1] && !keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.Left;
-				if (!keyDown[0] && !keyDown[1] && keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.Down;
-				if (!keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.Right;
-//				if (keyDown[0] && keyDown[1] && !keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.UpLeft;
-//				if (keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.UpRight;
-//				if (!keyDown[0] && keyDown[1] && keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.DownLeft;
-//				if (!keyDown[0] && !keyDown[1] && keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.DownRight;
+				checkForPlayerDirection();
 			}
 			else if (gameObject.getId() == ID.Asteroid) {
 				if (pressedKey == KeyEvent.VK_SPACE) {
@@ -97,6 +89,7 @@ public class KeyInput extends KeyAdapter {
 						break;
 				}
 				stopPlayerVelocityWhenBothDirectionsNotPressed(gameObject);
+				checkForPlayerDirection();
 			}
 			
 			if (gameObject.getId() == ID.Asteroid) {
@@ -116,5 +109,16 @@ public class KeyInput extends KeyAdapter {
 		if (!keyDown[1] && !keyDown[3]) {
 			gameObject.setVelocityX(0);
 		}
+	}
+	
+	private void checkForPlayerDirection() {
+		if (keyDown[0] && !keyDown[1] && !keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.Up;
+		if (!keyDown[0] && keyDown[1] && !keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.Left;
+		if (!keyDown[0] && !keyDown[1] && keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.Down;
+		if (!keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.Right;
+		if (keyDown[0] && keyDown[1] && !keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.UpLeft;
+		if (keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.UpRight;
+		if (!keyDown[0] && keyDown[1] && keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.DownLeft;
+		if (!keyDown[0] && !keyDown[1] && keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.DownRight;
 	}
 }

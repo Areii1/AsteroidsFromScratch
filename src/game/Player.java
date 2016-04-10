@@ -105,6 +105,34 @@ public class Player extends GameObject {
 			
 			drawLines(g);
 		}
+		else if (angle == ANGLE.UpLeft) {
+			topPoint = new Point(topPoint.getX() - objectWidth / 2, firstBasePoint.getY());
+			firstBasePoint = new Point(topPoint.getX() + objectWidth / 2, topPoint.getY() + objectHeight);
+			secondBasePoint = new Point(firstBasePoint.getX() + objectWidth / 2, firstBasePoint.getY() - objectWidth / 2);
+			
+			drawLines(g);
+		}
+		else if (angle == ANGLE.UpRight) {
+			topPoint = new Point(topPoint.getX() + objectWidth / 2, firstBasePoint.getY());
+			firstBasePoint = new Point(topPoint.getX() - objectWidth / 2, topPoint.getY() + objectHeight);
+			secondBasePoint = new Point(firstBasePoint.getX() - objectWidth / 2, firstBasePoint.getY() - objectWidth / 2);
+			
+			drawLines(g);
+		}
+		else if (angle == ANGLE.DownLeft) {
+			firstBasePoint = new Point(topPoint.getX(), topPoint.getY());
+			secondBasePoint = new Point(firstBasePoint.getX() + objectWidth / 2, firstBasePoint.getY() + objectWidth / 2);
+			topPoint = new Point(firstBasePoint.getX() - objectWidth / 2, firstBasePoint.getY() + objectHeight);
+			
+			drawLines(g);
+		}
+		else if (angle == ANGLE.DownRight) {
+			firstBasePoint = new Point(topPoint.getX(), topPoint.getY());
+			secondBasePoint = new Point(firstBasePoint.getX() - objectWidth / 2, firstBasePoint.getY() + objectWidth / 2);
+			topPoint = new Point(firstBasePoint.getX() + objectWidth / 2, firstBasePoint.getY() + objectHeight);
+			
+			drawLines(g);
+		}
 		
 	}
 	
@@ -113,7 +141,5 @@ public class Player extends GameObject {
 		g.drawLine(topPoint.getX(), topPoint.getY(), firstBasePoint.getX(), firstBasePoint.getY());
 		g.drawLine(secondBasePoint.getX(), secondBasePoint.getY(), firstBasePoint.getX(), firstBasePoint.getY());
 	}
-	
-	
 	
 }

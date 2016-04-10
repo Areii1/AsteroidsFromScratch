@@ -43,7 +43,7 @@ public class Game extends Canvas implements Runnable {
 		
 		
 		if (gameState == STATE.Play) {
-			createAsteroids(30);
+			createAsteroids(0);
 			createPlayer();
 		}
 	}
@@ -105,7 +105,7 @@ public class Game extends Canvas implements Runnable {
 			gameState = STATE.LostGame;
 			handler.clearEnemies();
 		}
-		if (killCount >= 90) {
+		if (killCount >= 30) {
 			gameState = STATE.WonGame;
 			handler.clearEnemies();
 		}
