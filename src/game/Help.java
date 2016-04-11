@@ -24,8 +24,7 @@ public class Help extends MouseAdapter {
 		if (game.gameState == STATE.Help) {
 			if (Menu.mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 500, 300, 64)); {
 				game.gameState = STATE.Menu;
-				Menu.helpClicked = false;
-
+				
 			}
 		}
 	}

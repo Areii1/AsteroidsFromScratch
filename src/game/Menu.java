@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import game.Game.STATE;
 
 public class Menu extends MouseAdapter {
-	private Game game;
+	static private Game game;
 	private Handler handler;
 	public static boolean helpClicked = false;
 	
@@ -88,13 +88,14 @@ public class Menu extends MouseAdapter {
 			drawTitle(200, 160, Game.deathCount + " Deaths: You lost with a score of: " 									//Lost game info
 			+ (Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), font2, g);
 			
-			drawButton(310, 260, "Again?", font2, g);														//More
+			drawButton(310, 260, "Play Again", font2, g);														//More
 		}
 		else if (game.gameState == STATE.WonGame) {
-			drawTitle(100, 80, Game.killCount + " Kills: You won the game with a score of: " 							//Won game info
+			drawTitle(100, 200, Game.killCount + " Kills: You won the game with a score of: " 							//Won game info
 			+ (Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), font2, g);
 			
-			drawButton(Game.WIDTH / 2 - 150, 150, "Again?", font2, g);									//More
+			g.drawRect(Game.WIDTH / 2 - 150, 250, 300, 64);
+			g.drawString("Play Again?", 370, 290);								//More
 		}
 	}
 	
@@ -108,16 +109,32 @@ public class Menu extends MouseAdapter {
 	}
 	
 	public static void drawButton(int x, int y, String text, Font font, Graphics g) {
+		if(game.gameState == STATE.LostGame){
+			g.setFont(font);
+			g.setColor(Color.RED);
+			g.drawString(text,390,300 );
+			g.setColor(Color.RED);
+			g.drawRect(x, y, 300, 64);
+		}else{
 		g.setFont(font);
 		g.setColor(Color.GREEN);
 		g.drawString(text, x + 130, y + 38);
 		g.setColor(Color.RED);
 		g.drawRect(x, y, 300, 64);
+		}
 	}
 	
 	public static void drawTitle(int x, int y, String text, Font font, Graphics g) {
+		if(game.gameState == STATE.LostGame){
+			g.setFont(font);
+			g.setColor(Color.RED);
+			g.drawString(text, x, y);
+		}
+		else{
+		
 		g.setFont(font);
 		g.setColor(Color.GREEN);
 		g.drawString(text, x, y);
+		}
 	}
 }
