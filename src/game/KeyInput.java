@@ -26,30 +26,27 @@ public class KeyInput extends KeyAdapter {
 			if (gameObject.getId() == ID.Player) {
 				switch (pressedKey) {
 					case KeyEvent.VK_W:
-						gameObject.setVelocityY(-5);
 						keyDown[0] = true;
 						break;
 						
 					case KeyEvent.VK_A:
-						gameObject.setVelocityX(-5);
 						keyDown[1] = true;
 						break;
 						
 					case KeyEvent.VK_S:
-						gameObject.setVelocityY(5);
 						keyDown[2] = true;
 						break;
 					
 					case KeyEvent.VK_D:
-						gameObject.setVelocityX(5);
 						keyDown[3] = true;
 						break;
 						
 					case KeyEvent.VK_ENTER:
-						new Projectile(new Point(gameObject.point.getX(), gameObject.point.getY()),
+						new Projectile(new Point(Player.topPoint.getX(), Player.topPoint.getY()),
 							ID.Projectile, handler, (Player) gameObject, 3, 3);
 						break;
 				}
+				setVelocity(gameObject);
 				checkForPlayerDirection();
 			}
 			else if (gameObject.getId() == ID.Asteroid) {
@@ -63,7 +60,7 @@ public class KeyInput extends KeyAdapter {
 			System.exit(0);
 		}
 	}
-// Stops ships movement when the key is released.
+	
 	public void keyReleased(KeyEvent e) {
 		int releasedKey = e.getKeyCode();
 		
@@ -88,6 +85,7 @@ public class KeyInput extends KeyAdapter {
 						keyDown[3] = false;
 						break;
 				}
+				setVelocity(gameObject);
 				stopPlayerVelocityWhenBothDirectionsNotPressed(gameObject);
 				checkForPlayerDirection();
 			}
@@ -120,5 +118,28 @@ public class KeyInput extends KeyAdapter {
 		if (keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.UpRight;
 		if (!keyDown[0] && keyDown[1] && keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.DownLeft;
 		if (!keyDown[0] && !keyDown[1] && keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.DownRight;
+	}
+	
+	private void setVelocity(GameObject gameObject) {
+		if (keyDown[0] && !keyDown[1] && !keyDown[2] && !keyDown[3]) gameObject.setVelocityY(-5);
+		if (!keyDown[0] && keyDown[1] && !keyDown[2] && !keyDown[3]) gameObject.setVelocityX(-5);
+		if (!keyDown[0] && !keyDown[1] && keyDown[2] && !keyDown[3]) gameObject.setVelocityY(5);
+		if (!keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) gameObject.setVelocityX(5);
+		if (keyDown[0] && keyDown[1] && !keyDown[2] && !keyDown[3]) {
+			gameObject.setVelocityY(-4);
+			gameObject.setVelocityX(-4);
+		}
+		if (keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) {
+			gameObject.setVelocityY(-4);
+			gameObject.setVelocityX(4);
+		}
+		if (!keyDown[0] && keyDown[1] && keyDown[2] && !keyDown[3]) {
+			gameObject.setVelocityY(4);
+			gameObject.setVelocityX(-4);
+		}
+		if (!keyDown[0] && !keyDown[1] && keyDown[2] && keyDown[3]) {
+			gameObject.setVelocityY(4);
+			gameObject.setVelocityX(4);
+		}
 	}
 }

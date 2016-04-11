@@ -20,9 +20,9 @@ public class Player extends GameObject {
 	
 	public static ANGLE playerAngle = ANGLE.Up;
 	
-	private Point topPoint;
-	private Point firstBasePoint;
-	private Point secondBasePoint;
+	public static Point topPoint;
+	public static Point firstBasePoint;
+	public static Point secondBasePoint;
 
 	public Player(Point point, ID id, Handler handler, int width, int height) {
 		super(point, id, width, height);
@@ -141,5 +141,6 @@ public class Player extends GameObject {
 		g.drawLine(topPoint.getX(), topPoint.getY(), firstBasePoint.getX(), firstBasePoint.getY());
 		g.drawLine(secondBasePoint.getX(), secondBasePoint.getY(), firstBasePoint.getX(), firstBasePoint.getY());
 	}
+	
 	
 }
