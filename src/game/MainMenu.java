@@ -9,12 +9,13 @@ import java.awt.event.MouseEvent;
 
 import game.Game.STATE;
 
-public class Menu extends MouseAdapter {
+public class MainMenu extends MouseAdapter {
 	private Game game;
 	private Handler handler;
 	public static boolean helpClicked = false;
+	public static boolean playClicked = false;
 	
-	public Menu(Game game, Handler handler) {
+	public MainMenu(Game game, Handler handler) {
 		this.game = game;
 		this.handler = handler;
 	}
@@ -24,26 +25,23 @@ public class Menu extends MouseAdapter {
 		int mouseX = e.getX();
 		int mouseY = e.getY();
 		
-		if (game.gameState == STATE.Menu) {
+		if (Game.gameState == STATE.Menu) {
 			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)) {
-				game.gameState = STATE.Play;
-				Game.createAsteroids(10);
-				Game.createPlayer();
+				playClicked = true;
 			}
 			else if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 300, 300, 64)) {
-				game.gameState = STATE.Help;
 				helpClicked = true;
 			}
 			else if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 450, 300, 64)) {
 				System.exit(0);
 			}
 		}
-		if (game.gameState == STATE.LostGame) {
+		if (Game.gameState == STATE.LostGame) {
 			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
 				resetGame();
 			}
 		}
-		if (game.gameState == STATE.WonGame) {
+		if (Game.gameState == STATE.WonGame) {
 			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
 				resetGame();
 			}
@@ -84,13 +82,13 @@ public class Menu extends MouseAdapter {
 			drawButton(Game.WIDTH / 2 - 150, 300, "Help", font2, g); 									//Help
 			drawButton(Game.WIDTH / 2 - 150, 450, "Quit", font2, g);									//Quit
 		}
-		else if (game.gameState == STATE.LostGame) {
+		else if (Game.gameState == STATE.LostGame) {
 			drawTitle(200, 160, Game.deathCount + " Deaths: You lost with a score of: " 									//Lost game info
 			+ (Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), font2, g);
 			
 			drawButton(310, 260, "Again?", font2, g);														//More
 		}
-		else if (game.gameState == STATE.WonGame) {
+		else if (Game.gameState == STATE.WonGame) {
 			drawTitle(100, 80, Game.killCount + " Kills: You won the game with a score of: " 							//Won game info
 			+ (Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), font2, g);
 			
@@ -99,7 +97,7 @@ public class Menu extends MouseAdapter {
 	}
 	
 	private void resetGame() {
-		game.gameState = STATE.Play;
+		Game.gameState = STATE.Play;
 		Game.deathCount = 0;
 		Game.killCount = 0;
 		Game.gameScore = 0;

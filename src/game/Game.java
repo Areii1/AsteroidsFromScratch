@@ -25,22 +25,27 @@ public class Game extends Canvas implements Runnable {
 		Menu,
 		Help,
 		Play,
+		ChooseDifficulty,
 		LostGame,
 		WonGame;
 	}
-	public STATE gameState = STATE.Menu;
+	public static STATE gameState = STATE.Menu;
 	
-	private Menu menu;
-	private Help help;
+	private MainMenu menu;
+	private MenuHelp help;
+	private MenuChooseDifficulty chooseDifficulty;
 	
 	
 	public Game() {
 		handler = new Handler();
-		menu = new Menu(this, handler);
-		help = new Help(this, handler);
+		menu = new MainMenu(this, handler);
+		help = new MenuHelp(this, handler);
+		chooseDifficulty = new MenuChooseDifficulty(this, handler);
+		
 		addKeyListener(new KeyInput(handler));
-		addMouseListener(new Menu(this, handler));
-		addMouseListener(new Help(this, handler));
+		addMouseListener(new MainMenu(this, handler));
+		addMouseListener(new MenuHelp(this, handler));
+		addMouseListener(new MenuChooseDifficulty(this, handler));
 		
 		new Window(WIDTH, HEIGHT, "AsteroidsFromScratch", this);
 	}
@@ -99,12 +104,28 @@ public class Game extends Canvas implements Runnable {
 			menu.tick();
 		}
 		if (gameState == STATE.Menu) {
-			if (Menu.helpClicked) {
+			if (MainMenu.playClicked) {
+				gameState = STATE.ChooseDifficulty;
+				MainMenu.playClicked = false;
+			}
+		}
+		if (gameState == STATE.ChooseDifficulty) {
+			chooseDifficulty.tick();
+		}
+		if (gameState == STATE.Menu) {
+			if (MainMenu.helpClicked) {
 				gameState = STATE.Help;
+				MainMenu.helpClicked = false;
 			}
 		}
 		if (gameState == STATE.Help) {
 			help.tick();
+		}
+		if (gameState == STATE.Help) {
+			if (MenuHelp.backClicked) {
+				gameState = STATE.Menu;
+				MenuHelp.backClicked = false;
+			}
 		}
 		if (deathCount >= 5) {
 			gameState = STATE.LostGame;
@@ -126,8 +147,8 @@ public class Game extends Canvas implements Runnable {
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		handler.render(g);
 		
+		handler.render(g);
 		if (gameState == STATE.Play) {
 			String deaths = "Deaths: " + deathCount;
 			String kills = "Kills: " + killCount;
@@ -142,13 +163,18 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("W A S D to move", WIDTH - 100, 50);
 			g.drawString("Enter to shoot", WIDTH - 100, 70);
 			g.drawString("SPACE to hack", WIDTH - 100, 90);
+			
 		}
 		if (gameState == STATE.Help) {
 			help.render(g);
 		}
+		if (gameState == STATE.ChooseDifficulty) {
+			chooseDifficulty.render(g);
+		}
 		else if (gameState == STATE.Menu || gameState == STATE.LostGame || gameState == STATE.WonGame) {
 			menu.render(g);
 		}
+		
 		g.dispose();
 		bs.show();
 	}
@@ -158,6 +184,10 @@ public class Game extends Canvas implements Runnable {
 	}
 	// creates asteroid in game
 	public static void createAsteroids(int amount) {
+		MenuChooseDifficulty.easyClicked = false;
+		MenuChooseDifficulty.mediumClicked = false;
+		MenuChooseDifficulty.hardClicked = false;
+		System.out.println(amount);
 		Random r = new Random();
 		for (int i = 0; i < amount; i++) {
 			
@@ -169,4 +199,9 @@ public class Game extends Canvas implements Runnable {
 		handler.addObject(new Player(new Point(WIDTH / 2, HEIGHT / 2), ID.Player, handler, 20, 20));
 	}
 	
+	public static void startGameplay(int asteroidsAmount) {
+		gameState = STATE.Play;
+		createAsteroids(asteroidsAmount);
+		createPlayer();
+	}
 }
