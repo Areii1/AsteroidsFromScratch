@@ -12,9 +12,6 @@ public class Projectile extends GameObject {
 		this.handler = handler;
 		
 		handler.addObject(this);
-		if (player.getVelocityX() == 0 && player.getVelocityY() == 0) {
-			handler.removeObject(this);
-		}
 		
 		if (player.getVelocityX() < 0 && player.getVelocityY() < 0) {
 			velocityX = player.getVelocityX() - 2;
@@ -32,19 +29,19 @@ public class Projectile extends GameObject {
 			velocityX = player.getVelocityX() + 2;
 			velocityY = player.getVelocityY() - 2;
 		}
-		else if (player.getVelocityX() == 0 && player.getVelocityY() > 0) {
+		else if (player.getVelocityX() == 0 && player.getVelocityY() > 0 || (KeyInput.playerAngle == Player.ANGLE.Down)) {
 			velocityX = 0;
 			velocityY = player.getVelocityY() + 2;
 		}
-		else if (player.getVelocityX() == 0 && player.getVelocityY() < 0) {
+		else if (player.getVelocityX() == 0 && player.getVelocityY() < 0 || (KeyInput.playerAngle == Player.ANGLE.Up)) {
 			velocityX = 0;
 			velocityY = player.getVelocityY() - 2;
 		}
-		else if (player.getVelocityX() > 0 && player.getVelocityY() == 0) {
+		else if (player.getVelocityX() > 0 && player.getVelocityY() == 0 || (KeyInput.playerAngle == Player.ANGLE.Right)) {
 			velocityX = player.getVelocityX() + 2;
 			velocityY = 0;
 		}
-		else if (player.getVelocityX() < 0 && player.getVelocityY() == 0) {
+		else if (player.getVelocityX() < 0 && player.getVelocityY() == 0 || (KeyInput.playerAngle == Player.ANGLE.Left)) {
 			velocityX = player.getVelocityX() - 2;
 			velocityY = 0;
 		}

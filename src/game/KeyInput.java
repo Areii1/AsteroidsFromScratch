@@ -43,7 +43,7 @@ public class KeyInput extends KeyAdapter {
 						
 					case KeyEvent.VK_ENTER:
 						new Projectile(new Point(Player.topPoint.getX(), Player.topPoint.getY()),
-							ID.Projectile, handler, (Player) gameObject, 3, 3);
+								ID.Projectile, handler, (Player) gameObject, 3, 3);
 						break;
 				}
 				setVelocity(gameObject);
