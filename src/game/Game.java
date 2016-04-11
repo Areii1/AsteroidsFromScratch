@@ -184,9 +184,6 @@ public class Game extends Canvas implements Runnable {
 	}
 	// creates asteroid in game
 	public static void createAsteroids(int amount) {
-		MenuChooseDifficulty.easyClicked = false;
-		MenuChooseDifficulty.mediumClicked = false;
-		MenuChooseDifficulty.hardClicked = false;
 		System.out.println(amount);
 		Random r = new Random();
 		for (int i = 0; i < amount; i++) {
