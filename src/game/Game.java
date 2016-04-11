@@ -159,11 +159,14 @@ public class Game extends Canvas implements Runnable {
 			g.drawString(kills, 10, 50);
 			g.drawString(scoreStr, 10, 70);
 			
+<<<<<<< HEAD
 			g.drawString("ESC to close", WIDTH - 100, 30);
 			g.drawString("W A S D to move", WIDTH - 100, 50);
 			g.drawString("Enter to shoot", WIDTH - 100, 70);
 			g.drawString("SPACE to hack", WIDTH - 100, 90);
 			
+=======
+>>>>>>> 725cf28ecf01b7d306adf5c7760a5b177ccc0794
 		}
 		if (gameState == STATE.Help) {
 			help.render(g);

@@ -41,7 +41,7 @@ public class KeyInput extends KeyAdapter {
 						keyDown[3] = true;
 						break;
 						
-					case KeyEvent.VK_ENTER:
+					case KeyEvent.VK_SPACE:
 						new Projectile(new Point(Player.topPoint.getX(), Player.topPoint.getY()),
 								ID.Projectile, handler, (Player) gameObject, 3, 3);
 						break;
@@ -50,7 +50,7 @@ public class KeyInput extends KeyAdapter {
 				checkForPlayerDirection();
 			}
 			else if (gameObject.getId() == ID.Asteroid) {
-				if (pressedKey == KeyEvent.VK_SPACE) {
+				if (pressedKey == KeyEvent.VK_ENTER) {
 					gameObject.setVelocityY(0);
 					gameObject.setVelocityX(0);
 				}
@@ -91,7 +91,7 @@ public class KeyInput extends KeyAdapter {
 			}
 			
 			if (gameObject.getId() == ID.Asteroid) {
-				if (releasedKey == KeyEvent.VK_SPACE) {
+				if (releasedKey == KeyEvent.VK_ENTER) {
 					Asteroid asteroid = (Asteroid) gameObject;
 					asteroid.calculateVelocity();
 				}
