@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,6 +12,7 @@ import game.Game.STATE;
 public class Menu extends MouseAdapter {
 	private Game game;
 	private Handler handler;
+	public static boolean helpClicked = false;
 	
 	public Menu(Game game, Handler handler) {
 		this.game = game;
@@ -30,15 +32,10 @@ public class Menu extends MouseAdapter {
 			}
 			else if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 300, 300, 64)) {
 				game.gameState = STATE.Help;
+				helpClicked = true;
 			}
 			else if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 450, 300, 64)) {
 				System.exit(0);
-			}
-		}
-		//NOT WORKING PROPERLY
-		if (game.gameState == STATE.Help) {
-			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
-				game.gameState = STATE.Menu;
 			}
 		}
 		if (game.gameState == STATE.LostGame) {
@@ -58,7 +55,7 @@ public class Menu extends MouseAdapter {
 	}
 	
 	// checks position of the cursor.
-	private boolean mouseOver(int mouseX, int mouseY, int x, int y, int objectWidth, int objectHeight) {
+	public static boolean mouseOver(int mouseX, int mouseY, int x, int y, int objectWidth, int objectHeight) {
 		if (mouseX > x && mouseX < x + objectWidth) {
 			if (mouseY > y && mouseY < y + objectHeight) {
 				return true;
@@ -73,6 +70,7 @@ public class Menu extends MouseAdapter {
 	}
 	
 	public void tick() {
+		
 	}
 	
 	public void render(Graphics g) {
@@ -86,22 +84,17 @@ public class Menu extends MouseAdapter {
 			drawButton(Game.WIDTH / 2 - 150, 300, "Help", font2, g); 									//Help
 			drawButton(Game.WIDTH / 2 - 150, 450, "Quit", font2, g);									//Quit
 		}
-		else if (game.gameState == STATE.Help) {
-			drawTitle(Game.WIDTH / 2 - 70, 80, "Help", font, g);										//Title Help
-			
-			drawButton(Game.WIDTH / 2 - 150, 150, "Back", font2, g);									//Back
-		}
 		else if (game.gameState == STATE.LostGame) {
 			drawTitle(200, 160, Game.deathCount + " Deaths: You lost with a score of: " 									//Lost game info
 			+ (Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), font2, g);
 			
-			drawButton(310, 260, "More", font2, g);														//More
+			drawButton(310, 260, "Again?", font2, g);														//More
 		}
 		else if (game.gameState == STATE.WonGame) {
 			drawTitle(100, 80, Game.killCount + " Kills: You won the game with a score of: " 							//Won game info
 			+ (Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), font2, g);
 			
-			drawButton(Game.WIDTH / 2 - 150, 150, "More", font2, g);									//More
+			drawButton(Game.WIDTH / 2 - 150, 150, "Again?", font2, g);									//More
 		}
 	}
 	
@@ -114,7 +107,7 @@ public class Menu extends MouseAdapter {
 		Game.createPlayer();
 	}
 	
-	private void drawButton(int x, int y, String text, Font font, Graphics g) {
+	public static void drawButton(int x, int y, String text, Font font, Graphics g) {
 		g.setFont(font);
 		g.setColor(Color.GREEN);
 		g.drawString(text, x + 130, y + 38);
@@ -122,7 +115,7 @@ public class Menu extends MouseAdapter {
 		g.drawRect(x, y, 300, 64);
 	}
 	
-	private void drawTitle(int x, int y, String text, Font font, Graphics g) {
+	public static void drawTitle(int x, int y, String text, Font font, Graphics g) {
 		g.setFont(font);
 		g.setColor(Color.GREEN);
 		g.drawString(text, x, y);

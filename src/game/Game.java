@@ -31,21 +31,18 @@ public class Game extends Canvas implements Runnable {
 	public STATE gameState = STATE.Menu;
 	
 	private Menu menu;
+	private Help help;
 	
 	
 	public Game() {
 		handler = new Handler();
 		menu = new Menu(this, handler);
+		help = new Help(this, handler);
 		addKeyListener(new KeyInput(handler));
 		addMouseListener(new Menu(this, handler));
+		addMouseListener(new Help(this, handler));
 		
 		new Window(WIDTH, HEIGHT, "AsteroidsFromScratch", this);
-		
-		
-		if (gameState == STATE.Play) {
-			createAsteroids(0);
-			createPlayer();
-		}
 	}
 
 	public synchronized void start() {
@@ -98,8 +95,16 @@ public class Game extends Canvas implements Runnable {
 		if (gameState == STATE.Play) {
 			gameScore++;
 		}
-		else if (gameState == STATE.Menu || gameState == STATE.LostGame || gameState == STATE.Help) {
+		if (gameState == STATE.Menu || gameState == STATE.LostGame || gameState == STATE.WonGame) {
 			menu.tick();
+		}
+		if (gameState == STATE.Menu) {
+			if (Menu.helpClicked) {
+				gameState = STATE.Help;
+			}
+		}
+		if (gameState == STATE.Help) {
+			help.tick();
 		}
 		if (deathCount >= 5) {
 			gameState = STATE.LostGame;
@@ -138,7 +143,10 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("Enter to shoot", WIDTH - 100, 70);
 			g.drawString("SPACE to hack", WIDTH - 100, 90);
 		}
-		else if (gameState == STATE.Menu || gameState == STATE.Help || gameState == STATE.LostGame || gameState == STATE.WonGame) {
+		if (gameState == STATE.Help) {
+			help.render(g);
+		}
+		else if (gameState == STATE.Menu || gameState == STATE.LostGame || gameState == STATE.WonGame) {
 			menu.render(g);
 		}
 		g.dispose();

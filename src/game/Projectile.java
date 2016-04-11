@@ -32,18 +32,34 @@ public class Projectile extends GameObject {
 		else if (player.getVelocityX() == 0 && player.getVelocityY() > 0 || (KeyInput.playerAngle == Player.ANGLE.Down)) {
 			velocityX = 0;
 			velocityY = player.getVelocityY() + 2;
+			
+			if (player.getVelocityY() == 0) {
+				velocityY = 5;
+			}
 		}
 		else if (player.getVelocityX() == 0 && player.getVelocityY() < 0 || (KeyInput.playerAngle == Player.ANGLE.Up)) {
 			velocityX = 0;
 			velocityY = player.getVelocityY() - 2;
+			
+			if (player.getVelocityY() == 0) {
+				velocityY = -5;
+			}
 		}
 		else if (player.getVelocityX() > 0 && player.getVelocityY() == 0 || (KeyInput.playerAngle == Player.ANGLE.Right)) {
 			velocityX = player.getVelocityX() + 2;
 			velocityY = 0;
+			
+			if (player.getVelocityX() == 0) {
+				velocityX = 5;
+			}
 		}
 		else if (player.getVelocityX() < 0 && player.getVelocityY() == 0 || (KeyInput.playerAngle == Player.ANGLE.Left)) {
 			velocityX = player.getVelocityX() - 2;
 			velocityY = 0;
+			
+			if (player.getVelocityX() == 0) {
+				velocityX = -5;
+			}
 		}
 		
 		
