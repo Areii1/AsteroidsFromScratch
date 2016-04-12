@@ -10,9 +10,6 @@ import game.Game.STATE;
 public class MenuChooseDifficulty extends MouseAdapter {
 	private Game game;
 	private Handler handler;
-	public static boolean easyClicked = false;
-	public static boolean mediumClicked = false;
-	public static boolean hardClicked = false;
 	
 	public MenuChooseDifficulty(Game game, Handler handler) {
 		this.game = game;
@@ -24,42 +21,29 @@ public class MenuChooseDifficulty extends MouseAdapter {
 		int mouseY = e.getY();
 		
 		if (Game.gameState == STATE.ChooseDifficulty) {
-			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)) {
-				easyClicked = true;
-				System.out.println("easy");
-				Game.startGameplay(10);
+			if (MainMenu.mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)) {
+				Game.asteroidsAmount = 10;
+				Game.startGameplay(Game.asteroidsAmount);
 			}
 		}
 		if (Game.gameState == STATE.ChooseDifficulty) {
-			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 300, 300, 64)) {
-					mediumClicked = true;
-					Game.startGameplay(20);
-				}
+			if (MainMenu.mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 300, 300, 64)) {
+				Game.asteroidsAmount = 20;
+				Game.startGameplay(Game.asteroidsAmount);
+			}
 		}
 		if (Game.gameState == STATE.ChooseDifficulty) {
-			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 450, 300, 64)) {
-					hardClicked = true;
-					Game.startGameplay(30);
-				}
+			if (MainMenu.mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 450, 300, 64)) {
+				Game.asteroidsAmount = 30;
+				Game.startGameplay(Game.asteroidsAmount);
+				
+			}
 		}
 		
 	}
 	public void mouseReleased(MouseEvent e) {}
-	public void tick() {
-	}
 	
-	public static boolean mouseOver(int mouseX, int mouseY, int x, int y, int objectWidth, int objectHeight) {
-		if (mouseX > x && mouseX < x + objectWidth) {
-			if (mouseY > y && mouseY < y + objectHeight) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		else {
-			return false;
-		}
+	public void tick() {
 	}
 	
 	public void render(Graphics g) {

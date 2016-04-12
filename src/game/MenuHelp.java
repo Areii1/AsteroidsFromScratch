@@ -21,28 +21,15 @@ public class MenuHelp extends MouseAdapter {
 		int mouseY = e.getY();
 		
 		if (Game.gameState == STATE.Help) {
-			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 500, 300, 64)) {
+			if (MainMenu.mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 500, 300, 64)) {
 				backClicked = true;
 			}
 		}
 	}
+	
 	public void mouseReleased(MouseEvent e) {
 	}
-	
-	public static boolean mouseOver(int mouseX, int mouseY, int x, int y, int objectWidth, int objectHeight) {
-		if ((mouseX > x) && (mouseX < x + objectWidth)) {
-			if ((mouseY > y) && (mouseY < y + objectHeight)) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		else {
-			return false;
-		}
-	}
-	
+
 	public void tick() {
 	}
 	
@@ -60,8 +47,8 @@ public class MenuHelp extends MouseAdapter {
 			
 			g.drawString("To move use WASD", 350, 200);
 			g.drawString("To exit the game use ESC", 320, 230);
-			g.drawString("To shoot use SPACE", 345, 260);
-			g.drawString("To use hacks press ENTER", 315, 290);
+			g.drawString("To shoot use ENTER", 345, 260);
+			g.drawString("To use hacks press SPACE", 315, 290);
 		}
 		
 	}

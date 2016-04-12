@@ -15,6 +15,7 @@ public class Game extends Canvas implements Runnable {
 	public static int gameScore;
 	public static int killCount = 0;
 	public static int deathCount = 0;
+	public static int asteroidsAmount = 1;
 
 	private Thread thread;
 	private boolean running = false;
@@ -34,6 +35,7 @@ public class Game extends Canvas implements Runnable {
 	private MainMenu menu;
 	private MenuHelp help;
 	private MenuChooseDifficulty chooseDifficulty;
+	private MenuLostGame lostGame;
 	
 	
 	public Game() {
@@ -41,11 +43,13 @@ public class Game extends Canvas implements Runnable {
 		menu = new MainMenu(this, handler);
 		help = new MenuHelp(this, handler);
 		chooseDifficulty = new MenuChooseDifficulty(this, handler);
+		lostGame = new MenuLostGame(this, handler);
 		
 		addKeyListener(new KeyInput(handler));
 		addMouseListener(new MainMenu(this, handler));
 		addMouseListener(new MenuHelp(this, handler));
 		addMouseListener(new MenuChooseDifficulty(this, handler));
+		addMouseListener(new MenuLostGame(this, handler));
 		
 		new Window(WIDTH, HEIGHT, "AsteroidsFromScratch", this);
 	}
@@ -100,8 +104,11 @@ public class Game extends Canvas implements Runnable {
 		if (gameState == STATE.Play) {
 			gameScore++;
 		}
-		if (gameState == STATE.Menu || gameState == STATE.LostGame || gameState == STATE.WonGame) {
+		if (gameState == STATE.Menu || gameState == STATE.WonGame) {
 			menu.tick();
+		}
+		if (gameState == STATE.LostGame) {
+			lostGame.tick();
 		}
 		if (gameState == STATE.ChooseDifficulty) {
 			chooseDifficulty.tick();
@@ -131,12 +138,20 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 		
+		if (gameState == STATE.LostGame) {
+			if (MenuLostGame.lostGameAgainClicked) {
+				gameState = STATE.Play;
+				MainMenu.resetGame();
+				MenuLostGame.lostGameAgainClicked = false;
+			}
+		}
+		
 		if (deathCount >= 5) {
 			gameState = STATE.LostGame;
 			handler.clearEnemies();
 		}
 		
-		if (killCount >= 30) {
+		if (killCount >= asteroidsAmount * 3) {
 			gameState = STATE.WonGame;
 			handler.clearEnemies();
 		}
@@ -163,11 +178,6 @@ public class Game extends Canvas implements Runnable {
 			g.drawString(deaths, 10, 30);
 			g.drawString(kills, 10, 50);
 			g.drawString(scoreStr, 10, 70);
-
-			g.drawString("ESC to close", WIDTH - 100, 30);
-			g.drawString("W A S D to move", WIDTH - 100, 50);
-			g.drawString("Enter to shoot", WIDTH - 100, 70);
-			g.drawString("SPACE to hack", WIDTH - 100, 90);
 		}
 		if (gameState == STATE.Help) {
 			help.render(g);
@@ -175,8 +185,11 @@ public class Game extends Canvas implements Runnable {
 		if (gameState == STATE.ChooseDifficulty) {
 			chooseDifficulty.render(g);
 		}
-		else if (gameState == STATE.Menu || gameState == STATE.LostGame || gameState == STATE.WonGame) {
+		else if (gameState == STATE.Menu || gameState == STATE.WonGame) {
 			menu.render(g);
+		}
+		else if (gameState == STATE.LostGame) {
+			lostGame.render(g);
 		}
 		
 		g.dispose();

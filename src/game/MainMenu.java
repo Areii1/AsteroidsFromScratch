@@ -36,11 +36,6 @@ public class MainMenu extends MouseAdapter {
 				System.exit(0);
 			}
 		}
-		if (Game.gameState == STATE.LostGame) {
-			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
-				resetGame();
-			}
-		}
 		if (Game.gameState == STATE.WonGame) {
 			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
 				resetGame();
@@ -81,12 +76,7 @@ public class MainMenu extends MouseAdapter {
 			drawButton(Game.WIDTH / 2 - 150, 300, "Help", font2, g); 									//Help
 			drawButton(Game.WIDTH / 2 - 150, 450, "Quit", font2, g);									//Quit
 		}
-		else if (Game.gameState == STATE.LostGame) {
-			drawTitle(200, 160, Game.deathCount + " Deaths: You lost with a score of: " 									//Lost game info
-			+ (Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), font2, g);
-			
-			drawButton(310, 260, "Play Again", font2, g);														//More
-		}
+		
 		else if (Game.gameState == STATE.WonGame) {	
 
 			drawTitle(100, 200, Game.killCount + " Kills: You won the game with a score of: " 							//Won game info
@@ -102,7 +92,7 @@ public class MainMenu extends MouseAdapter {
 		Game.deathCount = 0;
 		Game.killCount = 0;
 		Game.gameScore = 0;
-		Game.createAsteroids(10);
+		Game.createAsteroids(Game.asteroidsAmount);
 		Game.createPlayer();
 	}
 	
