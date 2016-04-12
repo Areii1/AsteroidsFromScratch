@@ -36,11 +36,6 @@ public class MainMenu extends MouseAdapter {
 				System.exit(0);
 			}
 		}
-		if (Game.gameState == STATE.WonGame) {
-			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
-				resetGame();
-			}
-		}
 	}
 	
 	// When mouse is not pressed, doesn't do anything special
@@ -75,15 +70,6 @@ public class MainMenu extends MouseAdapter {
 			drawButton(Game.WIDTH / 2 - 150, 150, "Play", font2, g);									//Play
 			drawButton(Game.WIDTH / 2 - 150, 300, "Help", font2, g); 									//Help
 			drawButton(Game.WIDTH / 2 - 150, 450, "Quit", font2, g);									//Quit
-		}
-		
-		else if (Game.gameState == STATE.WonGame) {	
-
-			drawTitle(100, 200, Game.killCount + " Kills: You won the game with a score of: " 							//Won game info
-			+ (Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), font2, g);
-			
-			g.drawRect(Game.WIDTH / 2 - 150, 250, 300, 64);
-			g.drawString("Play Again?", 370, 290);								//More
 		}
 	}
 	

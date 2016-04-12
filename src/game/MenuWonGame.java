@@ -6,12 +6,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import game.Game.STATE;
 
-public class MenuLostGame extends MouseAdapter {
+public class MenuWonGame extends MouseAdapter {
 	private Game game;
 	private Handler handler;
-	public static boolean lostGameAgainClicked = false;
+	public static boolean wonGameAgainClicked = false;
 	
-	public MenuLostGame(Game game, Handler handler) {
+	public MenuWonGame(Game game, Handler handler) {
 		this.game = game;
 		this.handler = handler;
 	}
@@ -20,9 +20,9 @@ public class MenuLostGame extends MouseAdapter {
 		int mouseX = e.getX();
 		int mouseY = e.getY();
 		
-		if (Game.gameState == STATE.LostGame) {
+		if (Game.gameState == STATE.WonGame) {
 			if (MainMenu.mouseOver(mouseX, mouseY, 310, 260, 300, 64)) {
-				lostGameAgainClicked = true;
+				wonGameAgainClicked = true;
 			}
 		}
 	}
@@ -34,14 +34,15 @@ public class MenuLostGame extends MouseAdapter {
 	}
 	
 	public void render(Graphics g) {
-		if (Game.gameState == STATE.LostGame) {
-			Font font2 = new Font("arial", 1, 30);
-			Font font = new Font("verdana", 1, 50);
-			
-			MainMenu.drawTitle(200, 160, Game.deathCount + " Deaths: You lost with a score of: " 									//Lost game info
+		Font font = new Font("verdana", 1, 50);
+		Font font2 = new Font("arial", 1, 30);
+		
+		if (Game.gameState == STATE.WonGame) {
+			MainMenu.drawTitle(100, 200, Game.killCount + " Kills: You won the game with a score of: " 							//Won game info
 			+ (Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), font2, g);
 			
-			MainMenu.drawButton(310, 260, "Play Again", font2, g);	
+			g.drawRect(Game.WIDTH / 2 - 150, 250, 300, 64);
+			g.drawString("Play Again?", 370, 290);
 		}
 		
 	}

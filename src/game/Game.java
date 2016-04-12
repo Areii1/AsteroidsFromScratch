@@ -36,6 +36,7 @@ public class Game extends Canvas implements Runnable {
 	private MenuHelp help;
 	private MenuChooseDifficulty chooseDifficulty;
 	private MenuLostGame lostGame;
+	private MenuWonGame wonGame;
 	
 	
 	public Game() {
@@ -44,12 +45,14 @@ public class Game extends Canvas implements Runnable {
 		help = new MenuHelp(this, handler);
 		chooseDifficulty = new MenuChooseDifficulty(this, handler);
 		lostGame = new MenuLostGame(this, handler);
+		wonGame = new MenuWonGame(this, handler);
 		
 		addKeyListener(new KeyInput(handler));
 		addMouseListener(new MainMenu(this, handler));
 		addMouseListener(new MenuHelp(this, handler));
 		addMouseListener(new MenuChooseDifficulty(this, handler));
 		addMouseListener(new MenuLostGame(this, handler));
+		addMouseListener(new MenuWonGame(this, handler));
 		
 		new Window(WIDTH, HEIGHT, "AsteroidsFromScratch", this);
 	}
@@ -104,19 +107,22 @@ public class Game extends Canvas implements Runnable {
 		if (gameState == STATE.Play) {
 			gameScore++;
 		}
-		if (gameState == STATE.Menu || gameState == STATE.WonGame) {
+		if (gameState == STATE.Menu) {
 			menu.tick();
 		}
-		if (gameState == STATE.LostGame) {
-			lostGame.tick();
-		}
+		
 		if (gameState == STATE.ChooseDifficulty) {
 			chooseDifficulty.tick();
 		}
 		if (gameState == STATE.Help) {
 			help.tick();
 		}
-		
+		if (gameState == STATE.WonGame) {
+			wonGame.tick();
+		}
+		if (gameState == STATE.LostGame) {
+			lostGame.tick();
+		}
 		if (gameState == STATE.Menu) {
 			if (MainMenu.playClicked) {
 				gameState = STATE.ChooseDifficulty;
@@ -143,6 +149,14 @@ public class Game extends Canvas implements Runnable {
 				gameState = STATE.Play;
 				MainMenu.resetGame();
 				MenuLostGame.lostGameAgainClicked = false;
+			}
+		}
+		
+		if (gameState == STATE.WonGame) {
+			if (MenuWonGame.wonGameAgainClicked) {
+				gameState = STATE.Play;
+				MainMenu.resetGame();
+				MenuWonGame.wonGameAgainClicked = false;
 			}
 		}
 		
@@ -173,11 +187,13 @@ public class Game extends Canvas implements Runnable {
 			String deaths = "Deaths: " + deathCount;
 			String kills = "Kills: " + killCount;
 			String scoreStr = "Score: " + (gameScore + (killCount * 50) - (deathCount * 500));
+			String difficulty = "Difficulty: " + determineDifficulty();
 			
 			g.setColor(Color.GREEN);
 			g.drawString(deaths, 10, 30);
 			g.drawString(kills, 10, 50);
 			g.drawString(scoreStr, 10, 70);
+			g.drawString(difficulty, 10, 90);
 		}
 		if (gameState == STATE.Help) {
 			help.render(g);
@@ -185,11 +201,14 @@ public class Game extends Canvas implements Runnable {
 		if (gameState == STATE.ChooseDifficulty) {
 			chooseDifficulty.render(g);
 		}
-		else if (gameState == STATE.Menu || gameState == STATE.WonGame) {
+		else if (gameState == STATE.Menu) {
 			menu.render(g);
 		}
 		else if (gameState == STATE.LostGame) {
 			lostGame.render(g);
+		}
+		else if (gameState == STATE.WonGame) {
+			wonGame.render(g);
 		}
 		
 		g.dispose();
@@ -201,10 +220,6 @@ public class Game extends Canvas implements Runnable {
 	}
 	// creates asteroid in game
 	public static void createAsteroids(int amount) {
-//		MenuChooseDifficulty.easyClicked = false;
-//		MenuChooseDifficulty.mediumClicked = false;
-//		MenuChooseDifficulty.hardClicked = false;
-		System.out.println(amount);
 		Random r = new Random();
 		for (int i = 0; i < amount; i++) {
 			
@@ -220,5 +235,14 @@ public class Game extends Canvas implements Runnable {
 		gameState = STATE.Play;
 		createAsteroids(asteroidsAmount);
 		createPlayer();
+	}
+	
+	private String determineDifficulty() {
+		String difficulty = null;
+		if (asteroidsAmount == 10) difficulty = "Easy";
+		if (asteroidsAmount == 20) difficulty = "Medium";
+		if (asteroidsAmount == 30) difficulty = "Hard";
+		
+		return difficulty;
 	}
 }
