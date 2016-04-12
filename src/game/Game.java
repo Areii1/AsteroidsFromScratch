@@ -6,6 +6,12 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
+import menu.MainMenu;
+import menu.MenuChooseDifficulty;
+import menu.MenuHelp;
+import menu.MenuLostGame;
+import menu.MenuWonGame;
+
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = -4584388369897487885L;
 	
@@ -104,59 +110,47 @@ public class Game extends Canvas implements Runnable {
 	
 	private void tick() {
 		handler.tick();
+		
 		if (gameState == STATE.Play) {
 			gameScore++;
 		}
-		if (gameState == STATE.Menu) {
+		else if (gameState == STATE.Menu) {
 			menu.tick();
-		}
-		
-		if (gameState == STATE.ChooseDifficulty) {
-			chooseDifficulty.tick();
-		}
-		if (gameState == STATE.Help) {
-			help.tick();
-		}
-		if (gameState == STATE.WonGame) {
-			wonGame.tick();
-		}
-		if (gameState == STATE.LostGame) {
-			lostGame.tick();
-		}
-		if (gameState == STATE.Menu) {
 			if (MainMenu.playClicked) {
 				gameState = STATE.ChooseDifficulty;
 				MainMenu.playClicked = false;
 			}
-		}
-		
-		if (gameState == STATE.Menu) {
-			if (MainMenu.helpClicked) {
+			else if (MainMenu.helpClicked) {
 				gameState = STATE.Help;
 				MainMenu.helpClicked = false;
 			}
 		}
-		
-		if (gameState == STATE.Help) {
-			if (MenuHelp.backClicked) {
-				gameState = STATE.Menu;
-				MenuHelp.backClicked = false;
+		else if (gameState == STATE.ChooseDifficulty) {
+			chooseDifficulty.tick();
+		}
+		else if (gameState == STATE.Help) {
+			help.tick();
+			if (gameState == STATE.Help) {
+				if (MenuHelp.backClicked) {
+					gameState = STATE.Menu;
+					MenuHelp.backClicked = false;
+				}
 			}
 		}
-		
-		if (gameState == STATE.LostGame) {
-			if (MenuLostGame.lostGameAgainClicked) {
-				gameState = STATE.Play;
-				MainMenu.resetGame();
-				MenuLostGame.lostGameAgainClicked = false;
-			}
-		}
-		
-		if (gameState == STATE.WonGame) {
+		else if (gameState == STATE.WonGame) {
+			wonGame.tick();
 			if (MenuWonGame.wonGameAgainClicked) {
 				gameState = STATE.Play;
 				MainMenu.resetGame();
 				MenuWonGame.wonGameAgainClicked = false;
+			}
+		}
+		else if (gameState == STATE.LostGame) {
+			lostGame.tick();
+			if (MenuLostGame.lostGameAgainClicked) {
+				gameState = STATE.Play;
+				MainMenu.resetGame();
+				MenuLostGame.lostGameAgainClicked = false;
 			}
 		}
 		
@@ -183,6 +177,7 @@ public class Game extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		handler.render(g);
+		
 		if (gameState == STATE.Play) {
 			String deaths = "Deaths: " + deathCount;
 			String kills = "Kills: " + killCount;
@@ -195,10 +190,10 @@ public class Game extends Canvas implements Runnable {
 			g.drawString(scoreStr, 10, 70);
 			g.drawString(difficulty, 10, 90);
 		}
-		if (gameState == STATE.Help) {
+		else if (gameState == STATE.Help) {
 			help.render(g);
 		}
-		if (gameState == STATE.ChooseDifficulty) {
+		else if (gameState == STATE.ChooseDifficulty) {
 			chooseDifficulty.render(g);
 		}
 		else if (gameState == STATE.Menu) {
@@ -218,11 +213,11 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String[] arguments) {
 		new Game();
 	}
+	
 	// creates asteroid in game
 	public static void createAsteroids(int amount) {
 		Random r = new Random();
 		for (int i = 0; i < amount; i++) {
-			
 			handler.addObject(new Asteroid(new Point(r.nextInt(WIDTH), r.nextInt(HEIGHT)), ID.Asteroid, 30, 30));
 		}
 	}

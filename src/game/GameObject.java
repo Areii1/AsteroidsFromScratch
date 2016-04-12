@@ -76,6 +76,4 @@ public abstract class GameObject {
 			point.setY(Game.HEIGHT - objectWidth);
 		}
 	}
-	
-
 }

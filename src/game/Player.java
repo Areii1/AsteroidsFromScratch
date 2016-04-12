@@ -3,10 +3,10 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import game.KeyInput.*;
 
 public class Player extends GameObject {
 	Handler handler;
+	
 	public enum ANGLE {
 		Up,
 		Down,
@@ -43,6 +43,7 @@ public class Player extends GameObject {
 		setOppositeHorizontalOrVertivalCoordinate();
 		checkForCollision();
 	}
+	
 	/* Checks if particles are in touch with each other. If yes, something happens. Else you can continue normally.
 	 * */
 	private void checkForCollision() {
@@ -87,7 +88,7 @@ public class Player extends GameObject {
 		else if (angle == ANGLE.Down) {
 			firstBasePoint = new Point(topPoint.getX() - objectWidth / 2, topPoint.getY());
 			secondBasePoint = new Point(firstBasePoint.getX() + objectWidth, firstBasePoint.getY());
-			topPoint = new Point(firstBasePoint.getX() + objectWidth / 2, firstBasePoint.getY() + objectHeight);
+			topPoint = new Point(topPoint.getX(), topPoint.getY() + objectHeight);
 			
 			drawLines(g);
 		}
@@ -133,7 +134,6 @@ public class Player extends GameObject {
 			
 			drawLines(g);
 		}
-		
 	}
 	
 	private void drawLines(Graphics g) {
@@ -141,6 +141,4 @@ public class Player extends GameObject {
 		g.drawLine(topPoint.getX(), topPoint.getY(), firstBasePoint.getX(), firstBasePoint.getY());
 		g.drawLine(secondBasePoint.getX(), secondBasePoint.getY(), firstBasePoint.getX(), firstBasePoint.getY());
 	}
-	
-	
 }

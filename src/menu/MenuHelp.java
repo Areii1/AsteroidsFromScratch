@@ -1,9 +1,12 @@
-package game;
+package menu;
 
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import game.Game;
+import game.Handler;
 import game.Game.STATE;
 
 public class MenuHelp extends MouseAdapter {

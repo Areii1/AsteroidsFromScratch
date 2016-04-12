@@ -61,8 +61,6 @@ public class Projectile extends GameObject {
 				velocityX = -5;
 			}
 		}
-		
-		
 	}
 
 	@Override
@@ -73,6 +71,7 @@ public class Projectile extends GameObject {
 		removeWhenOutOfArea();
 		checkForImpact();
 	}
+	
 	// checks if bullet hits asteroid.
 	private void checkForImpact() {
 		for (int i = 0; i < handler.gameObjects.size(); i++) {
@@ -110,11 +109,11 @@ public class Projectile extends GameObject {
 	public Rectangle getBounds() {
 		return new Rectangle(point.getX() - objectWidth / 2, point.getY(), objectWidth - (objectWidth / 4), objectHeight);
 	}
+	
 	// removes projectile when it's out of the window.
 	private void removeWhenOutOfArea() {
 		if (point.getX() > Game.WIDTH || point.getX() < 0 || point.getY() > Game.HEIGHT || point.getY() < 0) {
 			handler.removeObject(this);
 		}
 	}
-
 }
