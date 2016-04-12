@@ -9,13 +9,8 @@ import java.awt.event.MouseEvent;
 
 import game.Game.STATE;
 
-<<<<<<< HEAD:src/game/MainMenu.java
 public class MainMenu extends MouseAdapter {
 	private Game game;
-=======
-public class Menu extends MouseAdapter {
-	static private Game game;
->>>>>>> 725cf28ecf01b7d306adf5c7760a5b177ccc0794:src/game/Menu.java
 	private Handler handler;
 	public static boolean helpClicked = false;
 	public static boolean playClicked = false;
@@ -93,13 +88,9 @@ public class Menu extends MouseAdapter {
 			
 			drawButton(310, 260, "Play Again", font2, g);														//More
 		}
-<<<<<<< HEAD:src/game/MainMenu.java
-		else if (Game.gameState == STATE.WonGame) {
-			drawTitle(100, 80, Game.killCount + " Kills: You won the game with a score of: " 							//Won game info
-=======
-		else if (game.gameState == STATE.WonGame) {
+		else if (Game.gameState == STATE.WonGame) {	
+
 			drawTitle(100, 200, Game.killCount + " Kills: You won the game with a score of: " 							//Won game info
->>>>>>> 725cf28ecf01b7d306adf5c7760a5b177ccc0794:src/game/Menu.java
 			+ (Game.gameScore - Game.deathCount * 400 + Game.killCount * 50), font2, g);
 			
 			g.drawRect(Game.WIDTH / 2 - 150, 250, 300, 64);
@@ -117,32 +108,32 @@ public class Menu extends MouseAdapter {
 	}
 	
 	public static void drawButton(int x, int y, String text, Font font, Graphics g) {
-		if(game.gameState == STATE.LostGame){
+		if (Game.gameState == STATE.LostGame) {
 			g.setFont(font);
 			g.setColor(Color.RED);
-			g.drawString(text,390,300 );
+			g.drawString(text, 390, 300);
 			g.setColor(Color.RED);
 			g.drawRect(x, y, 300, 64);
-		}else{
-		g.setFont(font);
-		g.setColor(Color.GREEN);
-		g.drawString(text, x + 130, y + 38);
-		g.setColor(Color.RED);
-		g.drawRect(x, y, 300, 64);
+		}
+		else {
+			g.setFont(font);
+			g.setColor(Color.GREEN);
+			g.drawString(text, x + 130, y + 38);
+			g.setColor(Color.RED);
+			g.drawRect(x, y, 300, 64);
 		}
 	}
 	
 	public static void drawTitle(int x, int y, String text, Font font, Graphics g) {
-		if(game.gameState == STATE.LostGame){
+		if (Game.gameState == STATE.LostGame) {
 			g.setFont(font);
 			g.setColor(Color.RED);
 			g.drawString(text, x, y);
 		}
-		else{
-		
-		g.setFont(font);
-		g.setColor(Color.GREEN);
-		g.drawString(text, x, y);
+		else {
+			g.setFont(font);
+			g.setColor(Color.GREEN);
+			g.drawString(text, x, y);
 		}
 	}
 }
