@@ -2,17 +2,12 @@ package game;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-import game.Game.STATE;
 import game.Player.*;
 
 public class KeyInput extends KeyAdapter {
 	private Handler handler;
 	private boolean[] keyDown = {false, false, false, false};
-	private Game game;
-	
-	public static ANGLE playerAngle = Player.ANGLE.Up;
-	
+		
 	public KeyInput(Handler handler) {
 		this.handler = handler;
 	}
@@ -42,12 +37,14 @@ public class KeyInput extends KeyAdapter {
 						break;
 						
 					case KeyEvent.VK_ENTER:
-						new Projectile(new Point(Player.topPoint.getX(), Player.topPoint.getY()),
+						Player player = (Player) gameObject;
+						new Projectile(new Point(player.getTopPointX(), player.getTopPointY()),
 								ID.Projectile, handler, (Player) gameObject, 3, 3);
 						break;
 				}
+				Player player = (Player) gameObject;
 				setVelocity(gameObject);
-				checkForPlayerDirection();
+				checkForPlayerDirection(player);
 			}
 			else if (gameObject.getId() == ID.Asteroid) {
 				if (pressedKey == KeyEvent.VK_SPACE) {
@@ -85,9 +82,10 @@ public class KeyInput extends KeyAdapter {
 						keyDown[3] = false;
 						break;
 				}
+				Player player = (Player) gameObject;
 				setVelocity(gameObject);
 				stopPlayerVelocityWhenBothDirectionsNotPressed(gameObject);
-				checkForPlayerDirection();
+				checkForPlayerDirection(player);
 			}
 			if (gameObject.getId() == ID.Asteroid) {
 				if (releasedKey == KeyEvent.VK_SPACE) {
@@ -108,15 +106,15 @@ public class KeyInput extends KeyAdapter {
 		}
 	}
 	
-	private void checkForPlayerDirection() {
-		if (keyDown[0] && !keyDown[1] && !keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.Up;
-		if (!keyDown[0] && keyDown[1] && !keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.Left;
-		if (!keyDown[0] && !keyDown[1] && keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.Down;
-		if (!keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.Right;
-		if (keyDown[0] && keyDown[1] && !keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.UpLeft;
-		if (keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.UpRight;
-		if (!keyDown[0] && keyDown[1] && keyDown[2] && !keyDown[3]) playerAngle = Player.ANGLE.DownLeft;
-		if (!keyDown[0] && !keyDown[1] && keyDown[2] && keyDown[3]) playerAngle = Player.ANGLE.DownRight;
+	private void checkForPlayerDirection(Player player) {
+		if (keyDown[0] && !keyDown[1] && !keyDown[2] && !keyDown[3]) player.setPlayerAngle(Player.ANGLE.Up);
+		if (!keyDown[0] && keyDown[1] && !keyDown[2] && !keyDown[3]) player.setPlayerAngle(Player.ANGLE.Left);
+		if (!keyDown[0] && !keyDown[1] && keyDown[2] && !keyDown[3]) player.setPlayerAngle(Player.ANGLE.Down);
+		if (!keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) player.setPlayerAngle(Player.ANGLE.Right);
+		if (keyDown[0] && keyDown[1] && !keyDown[2] && !keyDown[3]) player.setPlayerAngle(Player.ANGLE.UpLeft);
+		if (keyDown[0] && !keyDown[1] && !keyDown[2] && keyDown[3]) player.setPlayerAngle(Player.ANGLE.UpRight);
+		if (!keyDown[0] && keyDown[1] && keyDown[2] && !keyDown[3]) player.setPlayerAngle(Player.ANGLE.DownLeft);
+		if (!keyDown[0] && !keyDown[1] && keyDown[2] && keyDown[3]) player.setPlayerAngle(Player.ANGLE.DownRight);
 	}
 	
 	private void setVelocity(GameObject gameObject) {

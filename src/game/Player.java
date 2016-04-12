@@ -18,11 +18,11 @@ public class Player extends GameObject {
 		DownRight;
 	}
 	
-	public static ANGLE playerAngle = ANGLE.Up;
+	private ANGLE playerAngle = ANGLE.Up;
 	
-	public static Point topPoint;
-	public static Point firstBasePoint;
-	public static Point secondBasePoint;
+	private Point topPoint;
+	private Point firstBasePoint;
+	private Point secondBasePoint;
 
 	public Player(Point point, ID id, Handler handler, int width, int height) {
 		super(point, id, width, height);
@@ -37,8 +37,6 @@ public class Player extends GameObject {
 	public void tick() {
 		point.setX(point.getX() + velocityX);
 		point.setY(point.getY() + velocityY);
-		
-		Player.playerAngle = KeyInput.playerAngle;
 		
 		setOppositeHorizontalOrVertivalCoordinate();
 		checkForCollision();
@@ -140,5 +138,21 @@ public class Player extends GameObject {
 		g.drawLine(topPoint.getX(), topPoint.getY(), secondBasePoint.getX(), secondBasePoint.getY());
 		g.drawLine(topPoint.getX(), topPoint.getY(), firstBasePoint.getX(), firstBasePoint.getY());
 		g.drawLine(secondBasePoint.getX(), secondBasePoint.getY(), firstBasePoint.getX(), firstBasePoint.getY());
+	}
+	
+	public int getTopPointX() {
+		return topPoint.getX();
+	}
+
+	public int getTopPointY() {
+		return topPoint.getY();
+	}
+
+	public ANGLE getPlayerAngle() {
+		return playerAngle;
+	}
+
+	public void setPlayerAngle(ANGLE playerAngle) {
+		this.playerAngle = playerAngle;
 	}
 }
