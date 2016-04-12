@@ -44,7 +44,6 @@ public class Game extends Canvas implements Runnable {
 	private MenuLostGame lostGame;
 	private MenuWonGame wonGame;
 	
-	
 	public Game() {
 		handler = new Handler();
 		menu = new MainMenu(this, handler);
