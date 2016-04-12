@@ -73,19 +73,19 @@ public class KeyInput extends KeyAdapter {
 			if (gameObject.getId() == ID.Player) { 
 				switch (releasedKey) {
 					case KeyEvent.VK_W:
-						keyDown[0] = false;
+						keyDown[UP] = false;
 						break;
 						
 					case KeyEvent.VK_A:
-						keyDown[1] = false;
+						keyDown[LEFT] = false;
 						break;
 						
 					case KeyEvent.VK_S:
-						keyDown[2] = false;
+						keyDown[DOWN] = false;
 						break;
 						
 					case KeyEvent.VK_D:
-						keyDown[3] = false;
+						keyDown[RIGHT] = false;
 						break;
 				}
 				Player player = (Player) gameObject;
@@ -106,7 +106,7 @@ public class KeyInput extends KeyAdapter {
 	private void stopPlayerVelocityWhenBothDirectionsNotPressed(GameObject gameObject) {
 		if (isUpNorDownPressed()) 
 			gameObject.setVelocityY(0);
-		else if (isLeftNorRightPressed())
+		if (isLeftNorRightPressed())
 			gameObject.setVelocityX(0);
 	}
 	
@@ -197,6 +197,7 @@ public class KeyInput extends KeyAdapter {
 	}
 	
 	private boolean isLeftNorRightPressed() {
+		System.out.println(!keyDown[LEFT] && !keyDown[RIGHT]);
 		return !keyDown[LEFT] && !keyDown[RIGHT];
 	}
 }
