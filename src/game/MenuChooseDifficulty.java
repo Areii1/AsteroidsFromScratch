@@ -24,23 +24,22 @@ public class MenuChooseDifficulty extends MouseAdapter {
 		int mouseY = e.getY();
 		
 		if (Game.gameState == STATE.ChooseDifficulty) {
-			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
+			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)) {
 				easyClicked = true;
 				System.out.println("easy");
 				Game.startGameplay(10);
 			}
 		}
 		if (Game.gameState == STATE.ChooseDifficulty) {
-			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 300, 300, 64)); {
+			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 300, 300, 64)) {
 					mediumClicked = true;
 					Game.startGameplay(20);
 				}
 		}
 		if (Game.gameState == STATE.ChooseDifficulty) {
-			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 450, 300, 64)); {
+			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 450, 300, 64)) {
 					hardClicked = true;
-					Game.createAsteroids(30);
-					Game.createPlayer();
+					Game.startGameplay(30);
 				}
 		}
 		

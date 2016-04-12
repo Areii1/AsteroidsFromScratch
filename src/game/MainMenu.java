@@ -68,14 +68,13 @@ public class MainMenu extends MouseAdapter {
 	}
 	
 	public void tick() {
-		
 	}
 	
 	public void render(Graphics g) {
 		
 		Font font = new Font("verdana", 1, 50);
 		Font font2 = new Font("arial", 1, 30);
-		if (game.gameState == STATE.Menu) {
+		if (Game.gameState == STATE.Menu) {
 			drawTitle(Game.WIDTH / 2 - 140, 80, "Asteroids", font, g);									//Title Asteroids
 			
 			drawButton(Game.WIDTH / 2 - 150, 150, "Play", font2, g);									//Play
@@ -98,7 +97,7 @@ public class MainMenu extends MouseAdapter {
 		}
 	}
 	
-	private void resetGame() {
+	public static void resetGame() {
 		Game.gameState = STATE.Play;
 		Game.deathCount = 0;
 		Game.killCount = 0;

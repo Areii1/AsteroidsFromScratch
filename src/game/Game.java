@@ -103,34 +103,39 @@ public class Game extends Canvas implements Runnable {
 		if (gameState == STATE.Menu || gameState == STATE.LostGame || gameState == STATE.WonGame) {
 			menu.tick();
 		}
+		if (gameState == STATE.ChooseDifficulty) {
+			chooseDifficulty.tick();
+		}
+		if (gameState == STATE.Help) {
+			help.tick();
+		}
+		
 		if (gameState == STATE.Menu) {
 			if (MainMenu.playClicked) {
 				gameState = STATE.ChooseDifficulty;
 				MainMenu.playClicked = false;
 			}
 		}
-		if (gameState == STATE.ChooseDifficulty) {
-			chooseDifficulty.tick();
-		}
+		
 		if (gameState == STATE.Menu) {
 			if (MainMenu.helpClicked) {
 				gameState = STATE.Help;
 				MainMenu.helpClicked = false;
 			}
 		}
-		if (gameState == STATE.Help) {
-			help.tick();
-		}
+		
 		if (gameState == STATE.Help) {
 			if (MenuHelp.backClicked) {
 				gameState = STATE.Menu;
 				MenuHelp.backClicked = false;
 			}
 		}
+		
 		if (deathCount >= 5) {
 			gameState = STATE.LostGame;
 			handler.clearEnemies();
 		}
+		
 		if (killCount >= 30) {
 			gameState = STATE.WonGame;
 			handler.clearEnemies();
@@ -183,9 +188,9 @@ public class Game extends Canvas implements Runnable {
 	}
 	// creates asteroid in game
 	public static void createAsteroids(int amount) {
-		MenuChooseDifficulty.easyClicked = false;
-		MenuChooseDifficulty.mediumClicked = false;
-		MenuChooseDifficulty.hardClicked = false;
+//		MenuChooseDifficulty.easyClicked = false;
+//		MenuChooseDifficulty.mediumClicked = false;
+//		MenuChooseDifficulty.hardClicked = false;
 		System.out.println(amount);
 		Random r = new Random();
 		for (int i = 0; i < amount; i++) {

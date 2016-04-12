@@ -21,20 +21,17 @@ public class MenuHelp extends MouseAdapter {
 		int mouseY = e.getY();
 		
 		if (Game.gameState == STATE.Help) {
-			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 150, 300, 64)); {
+			if (mouseOver(mouseX, mouseY, Game.WIDTH / 2 - 150, 500, 300, 64)) {
 				backClicked = true;
 			}
 		}
 	}
 	public void mouseReleased(MouseEvent e) {
-		
-	}
-	public void tick() {
 	}
 	
 	public static boolean mouseOver(int mouseX, int mouseY, int x, int y, int objectWidth, int objectHeight) {
-		if (mouseX > x && mouseX < x + objectWidth) {
-			if (mouseY > y && mouseY < y + objectHeight) {
+		if ((mouseX > x) && (mouseX < x + objectWidth)) {
+			if ((mouseY > y) && (mouseY < y + objectHeight)) {
 				return true;
 			}
 			else {
@@ -44,6 +41,9 @@ public class MenuHelp extends MouseAdapter {
 		else {
 			return false;
 		}
+	}
+	
+	public void tick() {
 	}
 	
 	public void render(Graphics g) {
